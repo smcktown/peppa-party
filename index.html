@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--
+  SMCK · Lily's Peppa Pig 3rd birthday — Sat 19 Sep 2026, 4:30–8pm, function room
+  Source of truth in the vault: projects/lily-peppa-birthday-2026.md
+  Public build: first names only · no surnames, address, condo name or contacts.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Peppa Party">
+<title>Peppa Party · Lily is 3 · SMCK</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600&display=swap');
+
+:root {
+  --navy: #1D2B4F;
+  --lavender: #C5B4E3;
+  --pink: #F19FC2;
+  --pearl: #FAF8FF;
+  --ink: #1A1A2E;
+  --mist: #EDE8F7;
+  --mud: #8A6A4F;
+  --grass: #5E9B62;
+  --urgent: #D4574F;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; background: var(--pearl); }
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink); font-size: 14px; line-height: 1.45;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 1rem) env(safe-area-inset-left);
+}
+
+header { background: var(--navy); color: var(--pearl); padding: 1.4rem 1rem 1.1rem; position: relative; overflow: hidden; }
+header .puddle { position: absolute; border-radius: 50%; background: rgba(150,110,74,0.8); }
+header .puddle.p1 { width: 130px; height: 34px; right: -14px; bottom: 2px; }
+header .puddle.p2 { width: 80px;  height: 22px; right: 100px; bottom: 24px; opacity: 0.55; }
+header .inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; }
+header .brand { font-family: 'Caveat', cursive; font-size: 1.25rem; color: var(--lavender); }
+header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.75rem; margin: 0.2rem 0 0.15rem; }
+header .meta { font-size: 0.7rem; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
+header .countdown { display: inline-block; margin-top: 0.55rem; background: var(--pink); color: var(--navy); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.22rem 0.6rem; border-radius: 999px; }
+
+.bar { position: sticky; top: 0; z-index: 20; background: var(--pearl); padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--mist); }
+.bar .row { display: flex; gap: 0.5rem; align-items: center; }
+.bar .row + .row { margin-top: 0.5rem; }
+.bar .pct { font-weight: 800; font-size: 0.75rem; color: var(--navy); min-width: 38px; text-align: right; }
+.bar .track { flex: 1; height: 5px; background: var(--mist); border-radius: 3px; overflow: hidden; }
+.bar .fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--navy)); width: 0; transition: width 0.3s; }
+.bar .reset { background: transparent; border: 1px solid var(--lavender); color: var(--navy); padding: 0.2rem 0.5rem; font-size: 0.7rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
+.bar button.tab { flex: 1; background: transparent; border: 1.5px solid var(--lavender); color: var(--navy); font-family: 'Nunito'; font-weight: 700; font-size: 0.78rem; padding: 0.42rem 0.4rem; border-radius: 6px; cursor: pointer; }
+.bar button.tab.active { background: var(--navy); color: var(--pearl); border-color: var(--navy); }
+.bar .filters { display: flex; gap: 0.3rem; overflow-x: auto; padding-bottom: 0.15rem; }
+.bar .filters button { flex: 0 0 auto; background: transparent; border: 1px solid var(--lavender); color: var(--navy); font-family: 'Nunito'; font-weight: 700; font-size: 0.72rem; padding: 0.32rem 0.7rem; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.bar .filters button.active { background: var(--navy); color: var(--pearl); border-color: var(--navy); }
+.bar .filters button.star-f { border-color: var(--urgent); color: var(--urgent); }
+.bar .filters button.star-f.active { background: var(--urgent); color: #fff; border-color: var(--urgent); }
+
+.pax { display: flex; align-items: center; gap: 0.45rem; padding: 0.5rem 0.8rem; background: var(--mist); border-bottom: 1px solid var(--lavender); font-size: 0.75rem; font-weight: 700; color: var(--navy); }
+.pax .grp { display: flex; align-items: center; gap: 0.3rem; background: #fff; border: 1px solid var(--lavender); border-radius: 999px; padding: 0.15rem 0.3rem; }
+.pax .grp span.lbl { padding: 0 0.25rem; }
+.pax .grp button { width: 22px; height: 22px; border-radius: 50%; border: none; background: var(--navy); color: var(--pearl); font-weight: 800; font-size: 0.85rem; line-height: 1; cursor: pointer; }
+.pax .grp .val { min-width: 20px; text-align: center; font-weight: 800; font-size: 0.85rem; }
+.pax .hint { flex: 1; text-align: right; font-weight: 600; font-size: 0.66rem; color: var(--navy); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.06em; }
+
+main { padding: 0.6rem 0.6rem 4rem; max-width: 920px; margin: 0 auto; }
+
+.grp-head { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.2rem; color: var(--navy); margin: 1.1rem 0 0.4rem; padding: 0 0.3rem 0.25rem; border-bottom: 1.5px solid var(--lavender); display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+.grp-head .ct { font-family: 'Nunito'; font-size: 0.62rem; color: var(--navy); opacity: 0.55; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; white-space: nowrap; }
+.grp-head .when { font-family: 'Nunito'; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pink); }
+
+.card { background: #fff; border: 1px solid var(--mist); border-radius: 8px; overflow: hidden; }
+ul.list { list-style: none; margin: 0; padding: 0; }
+ul.list li { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.62rem 0.85rem; border-bottom: 1px solid var(--mist); cursor: pointer; }
+ul.list li:last-child { border-bottom: none; }
+ul.list li:active { background: var(--mist); }
+ul.list li .box { flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; border: 2px solid var(--navy); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+ul.list li .box::after { content: "✓"; color: var(--pearl); font-weight: 800; font-size: 0.8rem; opacity: 0; }
+ul.list li.done .box { background: var(--navy); }
+ul.list li.done .box::after { opacity: 1; }
+ul.list li.done .text .nm { color: var(--lavender); text-decoration: line-through; }
+ul.list li.done .text .note, ul.list li.done .text .qty { opacity: 0.4; }
+ul.list li.star .box { border-color: var(--urgent); }
+ul.list li.star.done .box { background: var(--urgent); }
+ul.list li .text { flex: 1; min-width: 0; }
+ul.list li .text .nm { font-size: 0.93rem; font-weight: 600; }
+ul.list li .text .qty { display: inline-block; background: rgba(197,180,227,0.3); color: var(--navy); font-weight: 800; font-size: 0.72rem; padding: 0.05rem 0.4rem; border-radius: 4px; margin-left: 0.35rem; vertical-align: 1px; }
+ul.list li .text .who { display: inline-block; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--grass); border: 1px solid var(--grass); padding: 0.02rem 0.32rem; border-radius: 3px; margin-left: 0.35rem; vertical-align: 1.5px; }
+ul.list li .text .note { display: block; font-size: 0.73rem; color: var(--navy); opacity: 0.62; margin-top: 0.15rem; }
+ul.list li.star .text .nm::after { content: " ⭐"; font-size: 0.72rem; }
+
+/* Run of show */
+.tl { position: relative; padding-left: 0.2rem; }
+.slot { display: flex; gap: 0.75rem; align-items: stretch; }
+.slot .rail { flex: 0 0 62px; text-align: right; padding-top: 0.9rem; }
+.slot .rail .t { font-family: 'Nunito'; font-weight: 800; font-size: 0.78rem; color: var(--navy); }
+.slot .rail .t2 { font-size: 0.65rem; color: var(--navy); opacity: 0.5; font-weight: 700; }
+.slot .spine { flex: 0 0 14px; position: relative; }
+.slot .spine::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--mist); }
+.slot:first-child .spine::before { top: 1rem; }
+.slot:last-child .spine::before { bottom: calc(100% - 1rem); }
+.slot .dot { position: absolute; left: 1px; top: 0.95rem; width: 12px; height: 12px; border-radius: 50%; background: var(--lavender); border: 2px solid var(--pearl); }
+.slot.key .dot { background: var(--pink); }
+.slot.prep .dot { background: var(--mud); }
+.slot .body { flex: 1; padding: 0.7rem 0 0.7rem; min-width: 0; }
+.slot .body h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.15rem; color: var(--navy); margin: 0 0 0.15rem; }
+.slot.key .body h3::before { content: "● "; color: var(--pink); font-size: 0.7rem; vertical-align: 3px; }
+.slot .body p { margin: 0; font-size: 0.82rem; color: var(--ink); opacity: 0.82; }
+.slot .body .tags { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.slot .body .tags span { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.1rem 0.4rem; border-radius: 3px; background: var(--mist); color: var(--navy); }
+
+.callout { background: #fff; border: 1px solid var(--mist); border-left: 4px solid var(--pink); border-radius: 8px; padding: 0.8rem 0.9rem; margin: 0.9rem 0; }
+.callout h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 0 0 0.3rem; }
+.callout p { margin: 0 0 0.4rem; font-size: 0.83rem; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.mud { border-left-color: var(--mud); }
+.callout.grass { border-left-color: var(--grass); }
+
+.footer-note { text-align: center; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lavender); margin-top: 1.6rem; padding: 0.5rem 0; }
+
+[hidden] { display: none !important; }
+
+@media print {
+  .bar, .pax { position: static; }
+  body { background: #fff; padding: 0.8cm; font-size: 11px; }
+  header { background: #fff; color: var(--navy); padding: 0 0 0.6cm; }
+  header h1, header .brand, header .meta, header .countdown { color: var(--navy); background: none; }
+  header .puddle { display: none; }
+  ul.list li { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="puddle p1"></div>
+    <div class="puddle p2"></div>
+    <div class="brand">jump in muddy puddles</div>
+    <h1>Lily is Three</h1>
+    <div class="meta">Sat 19 Sep · 4:30–8pm · Function room + pool</div>
+    <div class="countdown" id="countdown">—</div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="row">
+    <span class="pct" id="pct">0%</span>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <button class="reset" onclick="resetAll()">Reset</button>
+  </div>
+  <div class="row">
+    <button class="tab active" data-view="todo">✓ To-do</button>
+    <button class="tab" data-view="shop">🛒 Shopping</button>
+    <button class="tab" data-view="run">⏱ Run of show</button>
+  </div>
+  <div class="row filters" id="filters"></div>
+</div>
+
+<div class="pax" id="paxbar">
+  <div class="grp"><span class="lbl">Kids</span><button onclick="bump('kids',-1)">–</button><span class="val" id="v-kids">12</span><button onclick="bump('kids',1)">+</button></div>
+  <div class="grp"><span class="lbl">Adults</span><button onclick="bump('adults',-1)">–</button><span class="val" id="v-adults">14</span><button onclick="bump('adults',1)">+</button></div>
+  <div class="hint">quantities auto-scale</div>
+</div>
+
+<main>
+  <div id="todo-view"></div>
+  <div id="shop-view" hidden></div>
+  <div id="run-view" hidden></div>
+</main>
+
+<div class="footer-note">happy birthday, little one ✶</div>
+
+<script>
+const STORE_KEY = 'smck-peppa-lily-v1';
+const PARTY = new Date('2026-09-19T16:30:00+08:00');
+
+/* ---------- state ---------- */
+let S = { done: {}, kids: 12, adults: 14 };
+try { const raw = localStorage.getItem(STORE_KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- helpers that scale with headcount ---------- */
+const K = () => S.kids, A = () => S.adults, TOT = () => S.kids + S.adults;
+const batches = () => Math.ceil((K() * 3 + A() * 3) / 12);   // ~12 pancakes per 250g batch, 3 each
+const upto = (n, step) => Math.ceil(n / step) * step;
+function cakeCall() {
+  const t = TOT();
+  if (t <= 14) return '8-inch';
+  if (t <= 22) return '8-inch + 6-inch';
+  return '2 × 8-inch';
+}
+
+/* ---------- TO-DO ---------- */
+const PHASES = [
+  { key: 'p0', label: 'Lock it in',    when: 'by Sun 30 Aug' },
+  { key: 'p1', label: 'Two weeks out', when: 'by Sat 5 Sep' },
+  { key: 'p2', label: 'One week out',  when: 'by Fri 11 Sep' },
+  { key: 'p3', label: 'Party week',    when: 'Wed 16 – Fri 18 Sep' },
+  { key: 'p4', label: 'Party day',     when: 'Sat 19 Sep' },
+];
+
+const TODO = [
+  // ---- p0 : lock it in
+  {id:'t-book',   p:'p0', star:true, who:'Michelle', nm:'Book the function room + pool, 2:30–8:30pm',
+   note:'Book the whole block, not 4:30–8 — you need 2 hours to set up and 30 min to clear. Everything below assumes this is confirmed.'},
+  {id:'t-rules',  p:'p0', star:true, who:'Michelle', nm:'Check the house rules while booking',
+   note:'Five answers you need: max pax · pool guest limit · can you stick anything to walls/doors · is heating/cooking food allowed · music + end-time cut-off. Also the deposit amount.'},
+  {id:'t-guests', p:'p0', who:'Michelle', nm:'Finalise the guest list',
+   note:'Evie first — Lily asks for her by name. Count kids and adults separately, then set the numbers at the top of this page.'},
+  {id:'t-felt',   p:'p0', who:'Michelle', nm:"Dig out the felt puddles from Lexi's party and count them",
+   note:'Target is 8 puddles at mixed sizes. Whatever is short, the brown felt on the craft list covers.'},
+  {id:'t-tinsel', p:'p0', nm:'Find the tinsel fringe curtain + check the door width',
+   note:'Function room doors are usually wider than a bedroom door. If it falls short, one more panel is a cheap add to the Shopee order.'},
+  {id:'t-shopee', p:'p0', star:true, who:'Michelle', nm:'Place the Shopee / Lazada order',
+   note:'Longest lead time of anything on this list. Order it the same day you confirm the room — everything decorative hangs off this one basket.'},
+  {id:'t-outfit', p:'p0', nm:'Check Lily has a Peppa dress that still fits',
+   note:'If not, add it to the same Shopee order rather than a second one later.'},
+
+  // ---- p1 : two weeks out
+  {id:'t-invite', p:'p1', star:true, who:'Michelle', nm:'Send the invites (WhatsApp)',
+   note:'Must say: swimsuit + towel + a full change of clothes, and dinner is provided. RSVP by Fri 11 Sep — the cake and the goodie bags both key off that number.'},
+  {id:'t-pool',   p:'p1', star:true, nm:'Line up pool supervision — 2 adults in the water, named',
+   note:'A dozen small children and a pool is the one thing on this page that actually matters. Agree it now with two specific people, not "we’ll see on the day".'},
+  {id:'t-print',  p:'p1', nm:'Print the pin-the-tail poster (A1) + Peppa colouring sheets',
+   note:'Any print shop does A1 same-day. Colouring sheets — 20 copies on the home printer.'},
+  {id:'t-tables', p:'p1', nm:'Confirm what furniture the room already has',
+   note:'If it has no long tables you need two folding ones: pancake station + craft station must be separate.'},
+  {id:'t-playlist', p:'p1', nm:'Make the Peppa playlist + charge the speaker',
+   note:'~2 hours. Peppa songs at the start, ordinary kids’ music underneath dinner so the adults survive.'},
+
+  // ---- p2 : one week out
+  {id:'t-head',  p:'p2', star:true, who:'Michelle', nm:'Lock the headcount from RSVPs',
+   note:'Then set kids/adults at the top of this page — the shopping quantities and cake size all recompute from it.'},
+  {id:'t-cake',  p:'p2', star:true, who:'Michelle', nm:'Order the Awfully Chocolate cake for Fri 18 Sep delivery',
+   note:'Plain top, no writing — you are piping the grass yourself. Delivery window 2–6pm. Standard cakes need only a day, but order a week out so the slot is yours.'},
+  {id:'t-goodie', p:'p2', who:'Michelle', nm:'Assemble the goodie bags',
+   note:'Do it a week early. This is the job that always gets pushed to the night before and then done badly at 11pm.'},
+  {id:'t-piptest', p:'p2', nm:'Test the grass tip on a bit of buttercream',
+   note:'A #233 tip needs a stiffer buttercream than you think — if it slumps, more icing sugar. Five minutes now beats discovering it on the cake.'},
+  {id:'t-camera', p:'p2', nm:'Decide who is taking photos',
+   note:'One adult with the job, or there will be 200 photos of the cake and none of Lily.'},
+
+  // ---- p3 : party week
+  {id:'t-confirm', p:'p3', star:true, nm:'Wed 16 — reconfirm the room booking and the cake order',
+   note:'Both by message so you have it in writing.'},
+  {id:'t-shop1',  p:'p3', nm:'Thu 17 — supermarket run',
+   note:'Everything on the Supermarket tab. Buy the bananas green-ish; they ripen by Saturday.'},
+  {id:'t-shop2',  p:'p3', nm:'Thu 17 — Phoon Huat run',
+   note:'Grass tip, piping bags, icing sugar, gel colour, cake board.'},
+  {id:'t-cutfelt', p:'p3', nm:'Fri 18 — cut the brown felt into puddles',
+   note:'Irregular blobs, not circles. Mixed sizes, biggest about a metre across.'},
+  {id:'t-batter',  p:'p3', nm:'Fri 18 — make the pancake batter and rest it overnight',
+   note:'Resting overnight is genuinely better pancakes, and it takes 40 minutes off Saturday.'},
+  {id:'t-pipe',    p:'p3', star:true, who:'Michelle', nm:'Fri 18 — pipe the grass and set the figurines',
+   note:'Saturday morning is netball then Merbok — there is no window. Do the cake Friday night and put it straight back in the fridge.'},
+  {id:'t-latex',   p:'p3', nm:'Fri 18 — blow up the latex balloons',
+   note:'Latex only. Foil balloons on the day — they go slack overnight.'},
+  {id:'t-crates',  p:'p3', star:true, nm:'Fri 18 — pack the crates and load the car',
+   note:'One crate per station: decor · craft · pancake · cake. Saturday is a straight carry-down, no hunting.'},
+
+  // ---- p4 : party day
+  {id:'t-am',    p:'p4', nm:'8:00–12:30 — netball, then Merbok',
+   note:'Already on the calendar. Nothing party-shaped fits in here; do not try.'},
+  {id:'t-cook',  p:'p4', star:true, who:'Michelle', nm:'1:00–2:30 — cook the pancakes while Lily naps',
+   note:'Lily is down 1–4. Cook the full stack, layer with baking paper, into foil trays.'},
+  {id:'t-setup', p:'p4', star:true, who:'Shao', nm:'2:30–4:15 — set up the room (with Tyler and Lexi)',
+   note:'Puddles on the floor first, then tinsel on the door, then balloons, then the two stations. The big kids can do the puddles and the balloons on their own.'},
+  {id:'t-dress', p:'p4', nm:'4:15 — wake Lily, dress her, crown on',
+   note:'Fifteen minutes of quiet before the door opens. She will need it.'},
+  {id:'t-warm',  p:'p4', nm:'6:00 — warm the pancakes',
+   note:'120°C for 10 min if the room has an oven; otherwise foil trays in the cooler bags hold fine for 90 min.'},
+  {id:'t-down',  p:'p4', nm:'8:00–8:30 — pack down, bins out, deposit check',
+   note:'Photograph the room empty before you hand the key back.'},
+];
+
+/* ---------- SHOPPING ---------- */
+const STORES = [
+  { key: 's1', label: 'Shopee / Lazada',   when: 'order by Sun 30 Aug' },
+  { key: 's2', label: 'Craft — Spotlight / Art Friend', when: 'by Sat 5 Sep' },
+  { key: 's3', label: 'Phoon Huat',        when: 'Thu 17 Sep' },
+  { key: 's4', label: 'Awfully Chocolate', when: 'order by Wed 16 Sep' },
+  { key: 's5', label: 'Supermarket',       when: 'Thu 17 Sep' },
+  { key: 's6', label: 'Already at home — confirm', when: 'by Sun 30 Aug' },
+];
+
+const SHOP = [
+  // ---- s1 Shopee / Lazada
+  {id:'s-figs',   s:'s1', star:true, nm:'Peppa cake figurine set', q:'1 set', note:'Peppa, George, Mummy, Daddy. The centrepiece of the cake — order it first and check it arrives.'},
+  {id:'s-foil',   s:'s1', nm:'Peppa + George foil balloons', q:'1 set'},
+  {id:'s-num3',   s:'s1', star:true, nm:'Number "3" foil balloon, pink', q:'1', note:'This is the one in every photo.'},
+  {id:'s-latex',  s:'s1', nm:'Latex balloons — pink, red, white, pale blue', q:() => upto(TOT() * 3, 50) + ' pcs', note:'Peppa’s palette. Clusters, not an arch — most function rooms will not let you fix anything to the walls.'},
+  {id:'s-pump',   s:'s1', nm:'Balloon pump + curling ribbon + glue dots', q:'1 set'},
+  {id:'s-tail',   s:'s1', nm:'Pin the tail on Peppa — poster + tails', q:'1 set', note:'Or print your own A1. Yes, do this game — see the note on the Run of show tab about blindfolds.'},
+  {id:'s-tblware',s:'s1', nm:'Peppa paper plates, cups, napkins, tablecloths', q:() => TOT() + ' pax set', note:'Two tablecloths minimum — pancake station and craft station.'},
+  {id:'s-bags',   s:'s1', nm:'Peppa goodie bags', q:() => (K() + 2) + '', note:'Two spare, always.'},
+  {id:'s-crown',  s:'s1', star:true, nm:'Birthday crown or sash for Lily', q:'1'},
+  {id:'s-dress',  s:'s1', nm:'Peppa dress for Lily', q:'1', note:'Only if the one she has no longer fits.'},
+  {id:'s-bubbles',s:'s1', nm:'Mini bubble bottles', q:() => (K() + 2) + '', note:'Goodie bags, and spares for the pool.'},
+  {id:'s-stick',  s:'s1', nm:'Peppa sticker sheets', q:() => (K() + 2) + ''},
+  {id:'s-dough',  s:'s1', nm:'Mini playdough pots', q:() => (K() + 2) + ''},
+  {id:'s-float',  s:'s1', nm:'Peppa pool float / beach balls', q:'2'},
+
+  // ---- s2 Craft
+  {id:'c-felt',   s:'s2', star:true, nm:'Brown felt, 1m', q:'1 m', note:'Tops up the puddles you already have from Lexi’s party to 8. Buy the cheap acrylic felt, not wool.'},
+  {id:'c-plates', s:'s2', nm:'Pink paper plates (for the masks)', q:() => upto(K() * 2, 10) + '', note:'Two per child — one Peppa, one George.'},
+  {id:'c-card',   s:'s2', nm:'Card stock — pink + black, A4', q:'20 sheets', note:'Snouts, ears, eyes. Cut them out beforehand so the 3-year-olds are gluing, not cutting.'},
+  {id:'c-sticks', s:'s2', nm:'Lolly sticks', q:() => upto(K() * 2, 10) + ''},
+  {id:'c-eyes',   s:'s2', nm:'Googly eyes + foam sticker packs', q:'2 packs'},
+  {id:'c-glue',   s:'s2', nm:'Glue sticks', q:'6'},
+  {id:'c-scis',   s:'s2', nm:'Kid-safe scissors', q:'6', note:'For the older ones only.'},
+  {id:'c-tape',   s:'s2', star:true, nm:'Low-tack washi + double-sided tape', q:'2 rolls', note:'Residue on a function room wall is how you lose the deposit.'},
+  {id:'c-brown',  s:'s2', nm:'Brown playdough', q:'4 tubs', note:'The muddy-puddle tray — for the ones too small to sit through the mask craft.'},
+
+  // ---- s3 Phoon Huat
+  {id:'b-tip',    s:'s3', star:true, nm:'Wilton #233 grass piping tip', q:'1', note:'The multi-hole grass tip. Nothing else makes grass look like grass.'},
+  {id:'b-bags',   s:'s3', nm:'Disposable piping bags', q:'10'},
+  {id:'b-icing',  s:'s3', nm:'Icing sugar', q:'500 g'},
+  {id:'b-butter', s:'s3', nm:'Unsalted butter (for the buttercream)', q:'250 g'},
+  {id:'b-gel',    s:'s3', nm:'Gel colour — leaf green + moss green', q:'2', note:'Two greens piped together read as real grass. One flat green reads as a golf course.'},
+  {id:'b-board',  s:'s3', nm:'Cake board, 10-inch', q:'1'},
+  {id:'b-candle', s:'s3', star:true, nm:'Number "3" candle + long matches', q:'1'},
+
+  // ---- s4 Cake
+  {id:'k-cake',   s:'s4', star:true, nm:'Original All Chocolate — plain top, no writing', q:() => cakeCall(), note:'From $48. Deliver Fri 18 Sep, 2–6pm. Plain top is the whole point — you are piping grass over it so it reads as a muddy puddle.'},
+
+  // ---- s5 Supermarket
+  {id:'f-flour',  s:'s5', nm:'Plain flour', q:() => (batches() * 250 >= 1500 ? '2 kg' : '1 kg'), note:() => batches() + ' batches of pancake batter'},
+  {id:'f-bp',     s:'s5', nm:'Baking powder', q:'1'},
+  {id:'f-sugar',  s:'s5', nm:'Caster sugar', q:'500 g'},
+  {id:'f-eggs',   s:'s5', nm:'Eggs', q:() => (batches() + 8) + '', note:'Batter plus scrambled for the savoury station'},
+  {id:'f-milk',   s:'s5', nm:'Fresh milk', q:() => Math.ceil(batches() * 0.3 + 1) + ' L'},
+  {id:'f-butter', s:'s5', nm:'Butter', q:() => upto(batches() * 50 + 100, 250) + ' g'},
+  {id:'f-vanilla',s:'s5', nm:'Vanilla extract', q:'1'},
+  {id:'f-ham',    s:'s5', nm:'Ham + cheddar slices', q:'1 pack each', note:'Savoury station'},
+  {id:'f-saus',   s:'s5', nm:'Chicken cocktail sausages', q:() => Math.ceil(K() / 6) + ' packs'},
+  {id:'f-beans',  s:'s5', nm:'Baked beans', q:'2 tins'},
+  {id:'f-syrup',  s:'s5', star:true, nm:'Maple syrup', q:'1 large', note:'Peppa’s pancakes. Do not skimp here.'},
+  {id:'f-nut',    s:'s5', nm:'Nutella', q:'1 jar'},
+  {id:'f-cream',  s:'s5', nm:'Whipping cream', q:'2'},
+  {id:'f-banana', s:'s5', nm:'Bananas', q:() => Math.ceil(TOT() / 3) + '', note:'Buy them green-ish on Thursday'},
+  {id:'f-berry',  s:'s5', nm:'Strawberries + blueberries', q:'2 punnets each'},
+  {id:'f-sprink', s:'s5', nm:'Sprinkles + mini marshmallows', q:'1 each'},
+  {id:'f-pop',    s:'s5', nm:'Popcorn', q:() => Math.ceil(TOT() / 8) + ' packs', note:'The 5:45 holding snack while everyone changes'},
+  {id:'f-veg',    s:'s5', nm:'Cucumber, carrot sticks, cherry tomatoes, grapes', q:'1 platter worth'},
+  {id:'f-water',  s:'s5', star:true, nm:'Bottled water', q:() => upto(TOT() * 1.5, 12) + '', note:'Post-swim thirst is the single biggest under-buy at pool parties'},
+  {id:'f-juice',  s:'s5', nm:'Apple juice + Ribena', q:'2 + 1'},
+  {id:'f-ice',    s:'s5', nm:'Ice', q:'2 bags'},
+  {id:'f-coffee', s:'s5', nm:'Coffee sachets, tea bags, oat milk', q:'1 each', note:'The parents are staying 3.5 hours'},
+  {id:'f-trays',  s:'s5', nm:'Foil trays + baking paper + cling film', q:'4 trays'},
+  {id:'f-clean',  s:'s5', nm:'Paper towels, wet wipes, bin bags', q:'1 each', note:'Bin bags: pack twice what feels sensible'},
+  {id:'f-cutlery',s:'s5', nm:'Disposable cutlery + serving tongs', q:() => TOT() + ' sets, 4 tongs'},
+
+  // ---- s6 Already at home
+  {id:'h-tinsel', s:'s6', nm:'Tinsel fringe curtain', q:'✓', note:'Measure the function room door before you count on it'},
+  {id:'h-puddle', s:'s6', star:true, nm:"Felt puddles from Lexi's party", q:'count them', note:'Whatever is missing, the 1m of brown felt covers'},
+  {id:'h-boots',  s:'s6', nm:'Wellies — 2 pairs, as door props', q:'2', note:'Muddiest possible pair by the tinsel door. Photo op.'},
+  {id:'h-speaker',s:'s6', nm:'Bluetooth speaker', q:'1', note:'Charge it Friday'},
+  {id:'h-griddle',s:'s6', nm:'Large non-stick pan / electric griddle', q:'1–2', note:'For the Saturday afternoon cook'},
+  {id:'h-cooler', s:'s6', nm:'Cooler / insulated bags', q:'2', note:'Hold the pancakes hot from 2:30 to 6:15'},
+  {id:'h-noodle', s:'s6', nm:'Pool noodles + floats', q:'all of them'},
+  {id:'h-knife',  s:'s6', nm:'Cake knife + server + lighter', q:'1 set'},
+  {id:'h-towels', s:'s6', nm:'Spare towels', q:'4', note:'Someone always forgets'},
+];
+
+/* ---------- RUN OF SHOW ---------- */
+const RUN = [
+  {t:'1:00', t2:'– 2:30pm', cls:'prep', h:'Pancakes, while Lily naps', p:'Lily is down 1–4, so this is the only quiet stretch on Saturday. Cook the full stack, layer with baking paper, into foil trays, into the cooler bags.', tags:['Michelle','Kitchen']},
+  {t:'2:30', t2:'– 4:15pm', cls:'prep', h:'Set up the room', p:'Puddles on the floor first — they set the whole look. Then tinsel on the door, balloon clusters, then the two stations: pancake at one end, craft at the other.', tags:['Shao','Tyler','Lexi']},
+  {t:'4:15', t2:'pm', cls:'prep', h:'Wake and dress the birthday girl', p:'Crown on, quiet fifteen minutes, then downstairs.', tags:['Michelle']},
+  {t:'4:30', t2:'pm', cls:'key', h:'Doors open', p:'Guests arrive into the muddy puddles and the tinsel fringe. Bubbles going. Give the early ones a job — nothing settles a shy three-year-old faster.', tags:['Arrivals']},
+  {t:'4:45', t2:'– 5:45', cls:'key', h:'Swim', p:'One hour, and no longer — a three-year-old is done at sixty minutes. Two named adults in the water the whole time. Floats and beach balls in, no diving games.', tags:['Pool','2 adults in water']},
+  {t:'5:45', t2:'– 6:15', cls:'', h:'Rinse and change', p:'Popcorn, fruit and drinks on the table so the ones who change fast have somewhere to be. This half hour always runs long — let it.', tags:['Snack table open']},
+  {t:'6:15', t2:'– 6:55', cls:'key', h:'Pancake dinner', p:'Savoury end — ham, cheese, scrambled egg, sausages, beans. Sweet end — maple, Nutella, cream, banana, berries, sprinkles. Seat Evie next to Lily.', tags:['Two stations','Evie beside Lily']},
+  {t:'6:55', t2:'– 7:20', cls:'key', h:'Make something', p:'Paper-plate Peppa and George masks — snouts and ears pre-cut, so the little ones are gluing not cutting. Brown playdough tray alongside for anyone who will not sit still. Colouring sheets as the overflow.', tags:['Craft table','Take-home']},
+  {t:'7:20', t2:'– 7:35', cls:'key', h:'Pin the tail on Peppa', p:'Blindfold for Tyler, Lexi and the older ones. For the threes: no blindfold, just three spins and go — a blindfold on a three-year-old ends in tears, not laughter. Finish with a muddy puddle jump, everyone in at once.', tags:['Game','No blindfold for the 3s']},
+  {t:'7:35', t2:'– 7:50', cls:'key', h:'Cake', p:'Lights down, candle lit, Happy Birthday. Let Evie hold the number 3 balloon in the photo. Cut and hand round — small slices, it is nearly bedtime.', tags:['Photos','Chocolate + piped grass']},
+  {t:'7:50', t2:'– 8:00', cls:'', h:'Goodie bags and goodbyes', p:'Bags by the door so nobody leaves without one. Masks go home with their maker.', tags:['Farewell']},
+  {t:'8:00', t2:'– 8:30', cls:'prep', h:'Pack down', p:'Bins out, floor cleared, photograph the room empty before the key goes back.', tags:['Deposit']},
+];
+
+/* ---------- render ---------- */
+let view = 'todo', filter = 'all';
+
+function isDone(id) { return !!S.done[id]; }
+function toggle(id) { if (S.done[id]) delete S.done[id]; else S.done[id] = 1; save(); render(); }
+function bump(k, d) { S[k] = Math.max(0, S[k] + d); save(); render(); }
+function resetAll() { S.done = {}; save(); render(); }
+
+function val(v) { return typeof v === 'function' ? v() : v; }
+
+function itemsFor(v) { return v === 'todo' ? TODO : SHOP; }
+
+function passesFilter(it) {
+  if (filter === 'all') return true;
+  if (filter === 'open') return !isDone(it.id);
+  if (filter === 'done') return isDone(it.id);
+  if (filter === 'star') return !!it.star;
+  return it.p === filter || it.s === filter;
+}
+
+function liHTML(it) {
+  const cls = [isDone(it.id) ? 'done' : '', it.star ? 'star' : ''].filter(Boolean).join(' ');
+  const q = it.q ? '<span class="qty">' + val(it.q) + '</span>' : '';
+  const who = it.who ? '<span class="who">' + it.who + '</span>' : '';
+  const note = it.note ? '<span class="note">' + val(it.note) + '</span>' : '';
+  return '<li class="' + cls + '" data-id="' + it.id + '"><div class="box"></div>' +
+         '<div class="text"><span class="nm">' + it.nm + '</span>' + q + who + note + '</div></li>';
+}
+
+function renderList(target, groups, groupKey) {
+  const items = itemsFor(view).filter(passesFilter);
+  let html = '';
+  groups.forEach(g => {
+    const rows = items.filter(it => it[groupKey] === g.key);
+    if (!rows.length) return;
+    const openCt = rows.filter(it => !isDone(it.id)).length;
+    html += '<div class="grp-head"><span>' + g.label + '</span>' +
+            '<span class="when">' + g.when + '</span>' +
+            '<span class="ct">' + (rows.length - openCt) + '/' + rows.length + '</span></div>' +
+            '<div class="card"><ul class="list">' + rows.map(liHTML).join('') + '</ul></div>';
+  });
+  if (!html) html = '<div class="callout"><p>Nothing here with that filter on.</p></div>';
+  target.innerHTML = html;
+}
+
+function renderRun(target) {
+  let html = '<div class="callout mud"><h4>The shape of the afternoon</h4>' +
+    '<p>Swim first while everyone has energy, then feed them — post-swim hunger is real and it lands hard at 6pm. ' +
+    'Craft and games afterwards, when they are fed and calm enough to sit. Cake last, close to going-home time.</p></div>' +
+    '<div class="tl">';
+  RUN.forEach(s => {
+    html += '<div class="slot ' + s.cls + '">' +
+      '<div class="rail"><div class="t">' + s.t + '</div><div class="t2">' + s.t2 + '</div></div>' +
+      '<div class="spine"><div class="dot"></div></div>' +
+      '<div class="body"><h3>' + s.h + '</h3><p>' + s.p + '</p>' +
+      '<div class="tags">' + s.tags.map(t => '<span>' + t + '</span>').join('') + '</div></div></div>';
+  });
+  html += '</div>' +
+    '<div class="callout grass"><h4>The cake</h4><p>Awfully Chocolate, plain top, no writing. Green buttercream through a #233 grass tip, ' +
+    'two greens piped together so it does not read as a golf course. Figurines set in the grass, number 3 candle in the middle. ' +
+    'Pipe it <strong>Friday night</strong> — Saturday morning is netball and then Merbok, and there is no window.</p></div>' +
+    '<div class="callout"><h4>Evie</h4><p>Lily asks for her by name, so give her the small jobs: beside Lily at the pancake table, ' +
+    'her craft partner, and the one holding the number 3 balloon in the cake photo. At three years old that is the whole party.</p></div>';
+  target.innerHTML = html;
+}
+
+function renderFilters() {
+  const f = document.getElementById('filters');
+  let btns = [['all','All'],['open','To do'],['done','Done'],['star','⭐ Key']];
+  if (view === 'todo') PHASES.forEach(p => btns.push([p.key, p.label]));
+  if (view === 'shop') STORES.forEach(s => btns.push([s.key, s.label.split(' —')[0].split(' /')[0]]));
+  f.hidden = (view === 'run');
+  f.innerHTML = btns.map(b =>
+    '<button data-f="' + b[0] + '" class="' + (b[0] === 'star' ? 'star-f ' : '') + (filter === b[0] ? 'active' : '') + '">' + b[1] + '</button>'
+  ).join('');
+}
+
+function renderProgress() {
+  const all = TODO.concat(SHOP);
+  const done = all.filter(it => isDone(it.id)).length;
+  const pctv = all.length ? Math.round(done / all.length * 100) : 0;
+  document.getElementById('pct').textContent = pctv + '%';
+  document.getElementById('fill').style.width = pctv + '%';
+}
+
+function renderCountdown() {
+  const now = new Date();
+  const days = Math.ceil((PARTY - now) / 86400000);
+  const el = document.getElementById('countdown');
+  if (days > 1) el.textContent = days + ' days to go';
+  else if (days === 1) el.textContent = 'Tomorrow';
+  else if (days === 0) el.textContent = 'Today ✶';
+  else el.textContent = 'Happy birthday, Lily ✶';
+}
+
+function render() {
+  document.getElementById('v-kids').textContent = S.kids;
+  document.getElementById('v-adults').textContent = S.adults;
+  document.getElementById('paxbar').hidden = (view === 'run');
+  document.getElementById('todo-view').hidden = view !== 'todo';
+  document.getElementById('shop-view').hidden = view !== 'shop';
+  document.getElementById('run-view').hidden  = view !== 'run';
+  renderFilters();
+  if (view === 'todo') renderList(document.getElementById('todo-view'), PHASES, 'p');
+  if (view === 'shop') renderList(document.getElementById('shop-view'), STORES, 's');
+  if (view === 'run')  renderRun(document.getElementById('run-view'));
+  renderProgress();
+  renderCountdown();
+}
+
+document.addEventListener('click', e => {
+  const li = e.target.closest('li[data-id]');
+  if (li) { toggle(li.dataset.id); return; }
+  const tab = e.target.closest('button.tab');
+  if (tab) { view = tab.dataset.view; filter = 'all';
+    document.querySelectorAll('button.tab').forEach(b => b.classList.toggle('active', b === tab));
+    render(); return; }
+  const fb = e.target.closest('#filters button');
+  if (fb) { filter = fb.dataset.f; render(); return; }
+});
+
+render();
+</script>
+</body>
+</html>
