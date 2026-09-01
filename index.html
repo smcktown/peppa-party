@@ -72,6 +72,9 @@ main { padding: 0.6rem 0.6rem 4rem; max-width: 920px; margin: 0 auto; }
 .grp-head { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.2rem; color: var(--navy); margin: 1.1rem 0 0.4rem; padding: 0 0.3rem 0.25rem; border-bottom: 1.5px solid var(--lavender); display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
 .grp-head .ct { font-family: 'Nunito'; font-size: 0.62rem; color: var(--navy); opacity: 0.55; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; white-space: nowrap; }
 .grp-head .when { font-family: 'Nunito'; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pink); }
+.grp-head .when.late { color: var(--urgent); }
+.latebar { background: var(--urgent); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.5rem 0.85rem; border-radius: 8px; margin: 0.4rem 0 0.2rem; }
+.latebar b { font-weight: 800; }
 
 .card { background: #fff; border: 1px solid var(--mist); border-radius: 8px; overflow: hidden; }
 ul.list { list-style: none; margin: 0; padding: 0; }
@@ -197,11 +200,11 @@ function cakeCall() {
 
 /* ---------- TO-DO ---------- */
 const PHASES = [
-  { key: 'p0', label: 'Lock it in',    when: 'by Sun 30 Aug' },
-  { key: 'p1', label: 'Two weeks out', when: 'by Sat 5 Sep' },
-  { key: 'p2', label: 'One week out',  when: 'by Fri 11 Sep' },
-  { key: 'p3', label: 'Party week',    when: 'Wed 16 – Fri 18 Sep' },
-  { key: 'p4', label: 'Party day',     when: 'Sat 19 Sep' },
+  { key: 'p0', label: 'Lock it in',    when: 'by Sun 30 Aug',        due: '2026-08-30' },
+  { key: 'p1', label: 'Two weeks out', when: 'by Sat 5 Sep',         due: '2026-09-05' },
+  { key: 'p2', label: 'One week out',  when: 'by Fri 11 Sep',        due: '2026-09-11' },
+  { key: 'p3', label: 'Party week',    when: 'Wed 16 – Fri 18 Sep',  due: '2026-09-18' },
+  { key: 'p4', label: 'Party day',     when: 'Sat 19 Sep',           due: '2026-09-19' },
 ];
 
 const TODO = [
@@ -280,12 +283,12 @@ const TODO = [
 
 /* ---------- SHOPPING ---------- */
 const STORES = [
-  { key: 's1', label: 'Shopee / Lazada',   when: 'order by Sun 30 Aug' },
-  { key: 's2', label: 'Craft — Spotlight / Art Friend', when: 'by Sat 5 Sep' },
-  { key: 's3', label: 'Phoon Huat',        when: 'Thu 17 Sep' },
-  { key: 's4', label: 'Awfully Chocolate', when: 'order by Wed 16 Sep' },
-  { key: 's5', label: 'Supermarket',       when: 'Thu 17 Sep' },
-  { key: 's6', label: 'Already at home — confirm', when: 'by Sun 30 Aug' },
+  { key: 's1', label: 'Shopee / Lazada',   when: 'order by Sun 30 Aug', due: '2026-08-30' },
+  { key: 's2', label: 'Craft — Spotlight / Art Friend', when: 'by Sat 5 Sep', due: '2026-09-05' },
+  { key: 's3', label: 'Phoon Huat',        when: 'Thu 17 Sep',          due: '2026-09-17' },
+  { key: 's4', label: 'Awfully Chocolate', when: 'order by Wed 16 Sep', due: '2026-09-16' },
+  { key: 's5', label: 'Supermarket',       when: 'Thu 17 Sep',          due: '2026-09-17' },
+  { key: 's6', label: 'Already at home — confirm', when: 'by Sun 30 Aug', due: '2026-08-30' },
 ];
 
 const SHOP = [
@@ -393,6 +396,18 @@ function resetAll() { S.done = {}; save(); render(); }
 
 function val(v) { return typeof v === 'function' ? v() : v; }
 
+/* A group is late when its date has passed and something in it is still open.
+   Derived from today's date — nothing to keep up to date by hand. */
+function pastDue(due) { return due ? new Date(due + 'T23:59:59+08:00') < new Date() : false; }
+function groupFor(it) {
+  return (it.p ? PHASES : STORES).find(g => g.key === (it.p || it.s));
+}
+function isLate(it) {
+  const g = groupFor(it);
+  return !!g && pastDue(g.due) && !isDone(it.id);
+}
+function lateCount() { return TODO.concat(SHOP).filter(isLate).length; }
+
 function itemsFor(v) { return v === 'todo' ? TODO : SHOP; }
 
 function passesFilter(it) {
@@ -400,6 +415,7 @@ function passesFilter(it) {
   if (filter === 'open') return !isDone(it.id);
   if (filter === 'done') return isDone(it.id);
   if (filter === 'star') return !!it.star;
+  if (filter === 'late') return isLate(it);
   return it.p === filter || it.s === filter;
 }
 
@@ -414,13 +430,17 @@ function liHTML(it) {
 
 function renderList(target, groups, groupKey) {
   const items = itemsFor(view).filter(passesFilter);
-  let html = '';
+  const lc = itemsFor(view).filter(isLate).length;
+  let html = lc ? '<div class="latebar"><b>' + lc + (lc === 1 ? ' item is' : ' items are') +
+    ' past their date.</b> Tap ⚠ Late to see just those.</div>' : '';
   groups.forEach(g => {
     const rows = items.filter(it => it[groupKey] === g.key);
     if (!rows.length) return;
     const openCt = rows.filter(it => !isDone(it.id)).length;
+    const late = pastDue(g.due) && openCt > 0;
     html += '<div class="grp-head"><span>' + g.label + '</span>' +
-            '<span class="when">' + g.when + '</span>' +
+            '<span class="when' + (late ? ' late' : '') + '">' +
+            (late ? '⚠ overdue · was ' + g.when.replace(/^(by|order by) /, '') : g.when) + '</span>' +
             '<span class="ct">' + (rows.length - openCt) + '/' + rows.length + '</span></div>' +
             '<div class="card"><ul class="list">' + rows.map(liHTML).join('') + '</ul></div>';
   });
@@ -452,11 +472,12 @@ function renderRun(target) {
 function renderFilters() {
   const f = document.getElementById('filters');
   let btns = [['all','All'],['open','To do'],['done','Done'],['star','⭐ Key']];
+  if (lateCount()) btns.splice(1, 0, ['late','⚠ Late']);
   if (view === 'todo') PHASES.forEach(p => btns.push([p.key, p.label]));
   if (view === 'shop') STORES.forEach(s => btns.push([s.key, s.label.split(' —')[0].split(' /')[0]]));
   f.hidden = (view === 'run');
   f.innerHTML = btns.map(b =>
-    '<button data-f="' + b[0] + '" class="' + (b[0] === 'star' ? 'star-f ' : '') + (filter === b[0] ? 'active' : '') + '">' + b[1] + '</button>'
+    '<button data-f="' + b[0] + '" class="' + (b[0] === 'star' || b[0] === 'late' ? 'star-f ' : '') + (filter === b[0] ? 'active' : '') + '">' + b[1] + '</button>'
   ).join('');
 }
 
