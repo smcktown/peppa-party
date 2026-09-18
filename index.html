@@ -1,531 +1,312 @@
 <!DOCTYPE html>
-<!--
-  SMCK · Lily's Peppa Pig 3rd birthday — Sat 19 Sep 2026, 4:30–8pm, function room
-  Source of truth in the vault: projects/lily-peppa-birthday-2026.md
-  Public build: first names only · no surnames, address, condo name or contacts.
--->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Peppa Party">
-<title>Peppa Party · Lily is 3 · SMCK</title>
+<meta name="apple-mobile-web-app-title" content="Lily is 3">
+<title>Lily is 3</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600&display=swap');
 
-:root {
-  --navy: #1D2B4F;
-  --lavender: #C5B4E3;
-  --pink: #F19FC2;
-  --pearl: #FAF8FF;
-  --ink: #1A1A2E;
-  --mist: #EDE8F7;
-  --mud: #8A6A4F;
-  --grass: #5E9B62;
-  --urgent: #D4574F;
-}
+:root{--navy:#3B2340;--lavender:#F3B8D4;--pink:#E86FA6;--pearl:#FFFAFC;--ink:#1A1A2E;
+  --mist:#FBE9F2;--lav-deep:#B5558A;--rule:#F2DCE8;--mute:#6A6480}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--pearl)}
+body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+  color:var(--ink);font-size:15px;line-height:1.55;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 1rem) env(safe-area-inset-left)}
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { margin: 0; padding: 0; background: var(--pearl); }
-body {
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--ink); font-size: 14px; line-height: 1.45;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 1rem) env(safe-area-inset-left);
-}
+header{background:var(--navy);color:var(--pearl);padding:1.5rem 1.2rem 1.1rem;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-70px;top:-90px;width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(circle,rgba(197,180,227,.25),transparent 68%)}
+header .brand{font-family:'Caveat',cursive;font-size:1.35rem;color:var(--lavender);line-height:1;position:relative;z-index:1}
+header h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.85rem;margin:.25rem 0 .1rem;
+  color:var(--pearl);position:relative;z-index:1}
+header .meta{font-size:.72rem;color:var(--lavender);text-transform:uppercase;letter-spacing:.13em;
+  font-weight:700;position:relative;z-index:1}
 
-header { background: var(--navy); color: var(--pearl); padding: 1.4rem 1rem 1.1rem; position: relative; overflow: hidden; }
-header .puddle { position: absolute; border-radius: 50%; background: rgba(150,110,74,0.8); }
-header .puddle.p1 { width: 130px; height: 34px; right: -14px; bottom: 2px; }
-header .puddle.p2 { width: 80px;  height: 22px; right: 100px; bottom: 24px; opacity: 0.55; }
-header .inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; }
-header .brand { font-family: 'Caveat', cursive; font-size: 1.25rem; color: var(--lavender); }
-header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.75rem; margin: 0.2rem 0 0.15rem; }
-header .meta { font-size: 0.7rem; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
-header .countdown { display: inline-block; margin-top: 0.55rem; background: var(--pink); color: var(--navy); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.22rem 0.6rem; border-radius: 999px; }
+/* week switcher */
+nav.weeks{background:var(--navy);padding:0 .8rem 1rem;display:flex;gap:.5rem;position:relative;z-index:1}
+nav.weeks button{flex:1 1 0;background:rgba(250,248,255,.09);border:1.5px solid rgba(197,180,227,.45);
+  color:var(--lavender);font-family:inherit;font-size:.8rem;font-weight:700;padding:.55rem .5rem;
+  border-radius:10px;cursor:pointer;line-height:1.25;transition:.15s}
+nav.weeks button b{display:block;font-size:.92rem;color:#fff;font-weight:800}
+nav.weeks button.active{background:var(--pearl);border-color:var(--pearl);color:var(--navy)}
+nav.weeks button.active b{color:var(--navy)}
+nav.weeks button:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
 
-.bar { position: sticky; top: 0; z-index: 20; background: var(--pearl); padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--mist); }
-.bar .row { display: flex; gap: 0.5rem; align-items: center; }
-.bar .row + .row { margin-top: 0.5rem; }
-.bar .pct { font-weight: 800; font-size: 0.75rem; color: var(--navy); min-width: 38px; text-align: right; }
-.bar .track { flex: 1; height: 5px; background: var(--mist); border-radius: 3px; overflow: hidden; }
-.bar .fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--navy)); width: 0; transition: width 0.3s; }
-.bar .reset { background: transparent; border: 1px solid var(--lavender); color: var(--navy); padding: 0.2rem 0.5rem; font-size: 0.7rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
-.bar button.tab { flex: 1; background: transparent; border: 1.5px solid var(--lavender); color: var(--navy); font-family: 'Nunito'; font-weight: 700; font-size: 0.78rem; padding: 0.42rem 0.4rem; border-radius: 6px; cursor: pointer; }
-.bar button.tab.active { background: var(--navy); color: var(--pearl); border-color: var(--navy); }
-.bar .filters { display: flex; gap: 0.3rem; overflow-x: auto; padding-bottom: 0.15rem; }
-.bar .filters button { flex: 0 0 auto; background: transparent; border: 1px solid var(--lavender); color: var(--navy); font-family: 'Nunito'; font-weight: 700; font-size: 0.72rem; padding: 0.32rem 0.7rem; border-radius: 999px; cursor: pointer; white-space: nowrap; }
-.bar .filters button.active { background: var(--navy); color: var(--pearl); border-color: var(--navy); }
-.bar .filters button.star-f { border-color: var(--urgent); color: var(--urgent); }
-.bar .filters button.star-f.active { background: var(--urgent); color: #fff; border-color: var(--urgent); }
+nav.tabs{position:sticky;top:0;z-index:10;background:var(--pearl);display:flex;gap:.4rem;
+  padding:.7rem .6rem;border-bottom:1px solid var(--mist);overflow-x:auto;-webkit-overflow-scrolling:touch}
+nav.tabs button{flex:0 0 auto;background:transparent;border:1.5px solid var(--lavender);color:var(--navy);
+  font-family:inherit;font-size:.82rem;font-weight:700;padding:.4rem .8rem;border-radius:999px;
+  cursor:pointer;white-space:nowrap;transition:.15s}
+nav.tabs button.active{background:var(--navy);color:var(--pearl);border-color:var(--navy)}
+nav.tabs button:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+@media(min-width:820px){nav.tabs{justify-content:center}}
 
-.pax { display: flex; align-items: center; gap: 0.45rem; padding: 0.5rem 0.8rem; background: var(--mist); border-bottom: 1px solid var(--lavender); font-size: 0.75rem; font-weight: 700; color: var(--navy); }
-.pax .grp { display: flex; align-items: center; gap: 0.3rem; background: #fff; border: 1px solid var(--lavender); border-radius: 999px; padding: 0.15rem 0.3rem; }
-.pax .grp span.lbl { padding: 0 0.25rem; }
-.pax .grp button { width: 22px; height: 22px; border-radius: 50%; border: none; background: var(--navy); color: var(--pearl); font-weight: 800; font-size: 0.85rem; line-height: 1; cursor: pointer; }
-.pax .grp .val { min-width: 20px; text-align: center; font-weight: 800; font-size: 0.85rem; }
-.pax .hint { flex: 1; text-align: right; font-weight: 600; font-size: 0.66rem; color: var(--navy); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.06em; }
+.week{display:none}
+.week.active{display:block}
+main{padding:1.1rem 1rem 4rem;max-width:760px;margin:0 auto}
+section{display:none;animation:fade .2s ease-out}
+section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-main { padding: 0.6rem 0.6rem 4rem; max-width: 920px; margin: 0 auto; }
+h2.sec{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.55rem;color:var(--navy);margin:0 0 .2rem}
+p.lede{color:var(--mute);margin:0 0 1.2rem;font-size:.92rem}
 
-.grp-head { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.2rem; color: var(--navy); margin: 1.1rem 0 0.4rem; padding: 0 0.3rem 0.25rem; border-bottom: 1.5px solid var(--lavender); display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
-.grp-head .ct { font-family: 'Nunito'; font-size: 0.62rem; color: var(--navy); opacity: 0.55; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; white-space: nowrap; }
-.grp-head .when { font-family: 'Nunito'; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pink); }
-.grp-head .when.late { color: var(--urgent); }
-.latebar { background: var(--urgent); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.5rem 0.85rem; border-radius: 8px; margin: 0.4rem 0 0.2rem; }
-.latebar b { font-weight: 800; }
+.banner{background:var(--navy);color:var(--pearl);border-radius:12px;padding:.9rem 1rem;margin:0 0 1.3rem;font-size:.9rem}
+.banner b{color:var(--pink)}
 
-.card { background: #fff; border: 1px solid var(--mist); border-radius: 8px; overflow: hidden; }
-ul.list { list-style: none; margin: 0; padding: 0; }
-ul.list li { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.62rem 0.85rem; border-bottom: 1px solid var(--mist); cursor: pointer; }
-ul.list li:last-child { border-bottom: none; }
-ul.list li:active { background: var(--mist); }
-ul.list li .box { flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; border: 2px solid var(--navy); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-ul.list li .box::after { content: "✓"; color: var(--pearl); font-weight: 800; font-size: 0.8rem; opacity: 0; }
-ul.list li.done .box { background: var(--navy); }
-ul.list li.done .box::after { opacity: 1; }
-ul.list li.done .text .nm { color: var(--lavender); text-decoration: line-through; }
-ul.list li.done .text .note, ul.list li.done .text .qty { opacity: 0.4; }
-ul.list li.star .box { border-color: var(--urgent); }
-ul.list li.star.done .box { background: var(--urgent); }
-ul.list li .text { flex: 1; min-width: 0; }
-ul.list li .text .nm { font-size: 0.93rem; font-weight: 600; }
-ul.list li .text .qty { display: inline-block; background: rgba(197,180,227,0.3); color: var(--navy); font-weight: 800; font-size: 0.72rem; padding: 0.05rem 0.4rem; border-radius: 4px; margin-left: 0.35rem; vertical-align: 1px; }
-ul.list li .text .who { display: inline-block; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--grass); border: 1px solid var(--grass); padding: 0.02rem 0.32rem; border-radius: 3px; margin-left: 0.35rem; vertical-align: 1.5px; }
-ul.list li .text .note { display: block; font-size: 0.73rem; color: var(--navy); opacity: 0.62; margin-top: 0.15rem; }
-ul.list li.star .text .nm::after { content: " ⭐"; font-size: 0.72rem; }
+.day{border-top:1px solid var(--rule);padding:1rem 0}
+.day:first-of-type{border-top:0;padding-top:.2rem}
+.day .d{font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lav-deep)}
+.day h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.35rem;color:var(--navy);
+  margin:.2rem 0 .3rem;line-height:1.15}
+.day p{margin:0 0 .35rem;color:#4A4A63;font-size:.92rem}
+.pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.45rem}
+.pill{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:.2rem .5rem;border-radius:999px;background:var(--mist);color:var(--lav-deep)}
+.pill.fry{background:var(--navy);color:var(--pearl)}
+.pill.iron{background:var(--pink);color:var(--navy)}
+.pill.out{background:transparent;border:1.5px solid var(--rule);color:var(--mute)}
+.pill.vitc{background:#FFF0B8;color:#7A5C00}
 
-/* Run of show */
-.tl { position: relative; padding-left: 0.2rem; }
-.slot { display: flex; gap: 0.75rem; align-items: stretch; }
-.slot .rail { flex: 0 0 62px; text-align: right; padding-top: 0.9rem; }
-.slot .rail .t { font-family: 'Nunito'; font-weight: 800; font-size: 0.78rem; color: var(--navy); }
-.slot .rail .t2 { font-size: 0.65rem; color: var(--navy); opacity: 0.5; font-weight: 700; }
-.slot .spine { flex: 0 0 14px; position: relative; }
-.slot .spine::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--mist); }
-.slot:first-child .spine::before { top: 1rem; }
-.slot:last-child .spine::before { bottom: calc(100% - 1rem); }
-.slot .dot { position: absolute; left: 1px; top: 0.95rem; width: 12px; height: 12px; border-radius: 50%; background: var(--lavender); border: 2px solid var(--pearl); }
-.slot.key .dot { background: var(--pink); }
-.slot.prep .dot { background: var(--mud); }
-.slot .body { flex: 1; padding: 0.7rem 0 0.7rem; min-width: 0; }
-.slot .body h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.15rem; color: var(--navy); margin: 0 0 0.15rem; }
-.slot.key .body h3::before { content: "● "; color: var(--pink); font-size: 0.7rem; vertical-align: 3px; }
-.slot .body p { margin: 0; font-size: 0.82rem; color: var(--ink); opacity: 0.82; }
-.slot .body .tags { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.25rem; }
-.slot .body .tags span { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.1rem 0.4rem; border-radius: 3px; background: var(--mist); color: var(--navy); }
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:.3rem 0 1rem}
+th{text-align:left;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--lav-deep);
+  padding:.4rem .5rem .4rem 0;border-bottom:1px solid var(--rule)}
+td{padding:.5rem .5rem .5rem 0;border-bottom:1px dotted var(--rule);vertical-align:top}
+td:first-child{font-weight:800;color:var(--navy);white-space:nowrap;width:4.6rem}
 
-.callout { background: #fff; border: 1px solid var(--mist); border-left: 4px solid var(--pink); border-radius: 8px; padding: 0.8rem 0.9rem; margin: 0.9rem 0; }
-.callout h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 0 0 0.3rem; }
-.callout p { margin: 0 0 0.4rem; font-size: 0.83rem; }
-.callout p:last-child { margin-bottom: 0; }
-.callout.mud { border-left-color: var(--mud); }
-.callout.grass { border-left-color: var(--grass); }
+.grp{margin-bottom:1.4rem}
+.grp h3{font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--lav-deep);
+  margin:0 0 .45rem;padding-bottom:.28rem;border-bottom:1px solid var(--rule)}
+label.item{display:flex;gap:.6rem;align-items:flex-start;padding:.4rem 0;cursor:pointer}
+label.item input{appearance:none;flex:0 0 auto;width:19px;height:19px;margin-top:1px;border:1.8px solid var(--lavender);
+  border-radius:5px;background:#fff;cursor:pointer;position:relative}
+label.item input:checked{background:var(--navy);border-color:var(--navy)}
+label.item input:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center}
+label.item input:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+label.item span{font-size:.92rem}
+label.item em{color:var(--mute);font-style:normal;font-size:.82rem}
+label.item input:checked ~ span{opacity:.42;text-decoration:line-through}
+.bar{background:var(--mist);border-radius:999px;height:7px;overflow:hidden;margin:.15rem 0 1.2rem}
+.bar i{display:block;height:100%;background:var(--lav-deep);width:0;transition:width .25s}
+.count{font-size:.77rem;color:var(--mute);font-weight:700;margin-bottom:.3rem}
+.reset{background:none;border:1.5px solid var(--rule);color:var(--mute);font-family:inherit;font-size:.75rem;
+  font-weight:700;padding:.35rem .75rem;border-radius:999px;cursor:pointer;margin-top:.5rem}
 
-.footer-note { text-align: center; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lavender); margin-top: 1.6rem; padding: 0.5rem 0; }
+.note{background:var(--mist);border-left:3px solid var(--pink);border-radius:0 8px 8px 0;padding:.7rem .85rem;
+  margin:1rem 0 0;font-size:.87rem;color:#4A4A63}
+.note b{color:var(--navy)}
+footer{text-align:center;font-family:'Caveat',cursive;font-size:1.15rem;color:var(--lav-deep);padding:1.4rem 1rem 2rem}
 
-[hidden] { display: none !important; }
-
-@media print {
-  .bar, .pax { position: static; }
-  body { background: #fff; padding: 0.8cm; font-size: 11px; }
-  header { background: #fff; color: var(--navy); padding: 0 0 0.6cm; }
-  header h1, header .brand, header .meta, header .countdown { color: var(--navy); background: none; }
-  header .puddle { display: none; }
-  ul.list li { break-inside: avoid; }
-}
+@media print{nav.weeks,nav.tabs,.reset,.bar,.count{display:none}
+  .week,section{display:block!important;page-break-after:always}
+  body{background:#fff;padding:1cm}header{background:#fff;color:var(--navy);border-bottom:2px solid var(--navy)}
+  header h1,header .brand,header .meta{color:var(--navy)}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="inner">
-    <div class="puddle p1"></div>
-    <div class="puddle p2"></div>
-    <div class="brand">jump in muddy puddles</div>
-    <h1>Lily is Three</h1>
-    <div class="meta">Sat 19 Sep · 4:30–8pm · Function room + pool</div>
-    <div class="countdown" id="countdown">—</div>
-  </div>
+  <div class="brand">muddy puddles</div>
+  <h1>Lily is 3</h1>
+  <div class="meta">Saturday 19 September</div>
 </header>
 
-<div class="bar">
-  <div class="row">
-    <span class="pct" id="pct">0%</span>
-    <div class="track"><div class="fill" id="fill"></div></div>
-    <button class="reset" onclick="resetAll()">Reset</button>
-  </div>
-  <div class="row">
-    <button class="tab active" data-view="todo">✓ To-do</button>
-    <button class="tab" data-view="shop">🛒 Shopping</button>
-    <button class="tab" data-view="run">⏱ Run of show</button>
-  </div>
-  <div class="row filters" id="filters"></div>
-</div>
 
-<div class="pax" id="paxbar">
-  <div class="grp"><span class="lbl">Kids</span><button onclick="bump('kids',-1)">–</button><span class="val" id="v-kids">12</span><button onclick="bump('kids',1)">+</button></div>
-  <div class="grp"><span class="lbl">Adults</span><button onclick="bump('adults',-1)">–</button><span class="val" id="v-adults">14</span><button onclick="bump('adults',1)">+</button></div>
-  <div class="hint">quantities auto-scale</div>
-</div>
-
+<nav class="tabs">
+  <button data-tab="t-now" class="active">🌙 Tonight</button>
+  <button data-tab="t-sat">📅 Saturday</button>
+  <button data-tab="t-food">🍽 Food</button>
+  <button data-tab="t-pack">📦 Pack</button>
+  <button data-tab="t-pool">🩱 Pool</button>
+</nav>
 <main>
-  <div id="todo-view"></div>
-  <div id="shop-view" hidden></div>
-  <div id="run-view" hidden></div>
+
+<!-- ==================== TONIGHT ==================== -->
+<section id="t-now" class="active">
+  <h2 class="sec">Tonight · Friday</h2>
+  <p class="lede">Three things on the list say "Saturday morning". Saturday morning doesn't exist.</p>
+
+  <div class="banner">⚠️ <b>Netball at eight, out until half twelve, doors at half two.</b> There is no Saturday morning — so <b>pancakes, sausages and the latex balloons all move to tonight.</b><br><br>✅ The good news: <b>tonight is nearly empty now the cake piping is gone.</b> This is the whole job, and it's about ninety minutes.</div>
+
+  <div class="grp"><h3>Move to tonight</h3>
+    <label class="item"><input type="checkbox"><span>🥞 <b>Make the pancakes</b> <em>they stack, cool and reheat perfectly — batter made and cooked tonight is one less thing tomorrow. Layer with baking paper, foil tray, lid.</em></span></label>
+    <label class="item"><input type="checkbox"><span>🌭 <b>Boil the sausages</b> <em>cooked tonight, reheated or served at room temp. ⚠️ check whether the room has a microwave or a kettle — if not they go in a cooler bag warm, or they're a room-temp item</em></span></label>
+    <label class="item"><input type="checkbox"><span>🎈 <b>Blow up the LATEX balloons only</b> <em>foil ones tomorrow in the room — they don't survive a car boot</em></span></label>
+  </div>
+
+  <div class="grp"><h3>Already planned for tonight</h3>
+    <label class="item"><input type="checkbox"><span>🪅 <b>Fill the piñata</b> <em>Lily's job — fruit rolls, teddies, gummies, marshmallows, lollies</em></span></label>
+    <label class="item"><input type="checkbox"><span>🟫 <b>Cut the felt puddles</b> <em>irregular blobs, mixed sizes, biggest about a metre</em></span></label>
+    <label class="item"><input type="checkbox"><span>📦 <b>Pack the crates</b> <em>one per station: decor · craft · food · cake. Load the car tonight.</em></span></label>
+    <label class="item"><input type="checkbox"><span>🔊 <b>Charge the speaker</b> <em>and download the songs — don't rely on the signal down there</em></span></label>
+  </div>
+
+  <div class="grp"><h3>Worth doing tonight instead of tomorrow</h3>
+    <label class="item"><input type="checkbox"><span>🛒 <b>The Saturday shop — do it tonight if you can</b> <em>carrots · pita · chips · dips · watermelon. Tomorrow's only window is half twelve to one, and you also need to cut everything.</em></span></label>
+    <label class="item"><input type="checkbox"><span>🍉 <b>Cut the melon</b> <em>melon holds overnight. Apples and oranges do NOT — those are tomorrow.</em></span></label>
+    <label class="item"><input type="checkbox"><span>🧊 <b>Clear a fridge shelf</b> <em>the cake arrives at ten tomorrow and has to live somewhere cold for nine hours</em></span></label>
+    <label class="item"><input type="checkbox"><span>❄️ <b>Freeze the cooler bags / ice packs</b> <em>they need overnight</em></span></label>
+  </div>
+
+  <div class="note">🥞 <b>Why the pancakes really can't wait.</b> Cooking a stack for thirty-odd people takes the best part of an hour, and the only gap tomorrow is one o'clock to half two — <b>which is also when the fruit and veg need cutting.</b> One of the two will lose, and it'll be the one that needs a pan.</div>
+</section>
+
+<!-- ==================== SATURDAY ==================== -->
+<section id="t-sat">
+  <h2 class="sec">Saturday</h2>
+  <p class="lede">Hour by hour. The two pinch points are in red.</p>
+
+  <table>
+    <tr><th>Time</th><th>What</th></tr>
+    <tr><td><b>8:00</b></td><td>Netball — Lexi</td></tr>
+    <tr><td><b>10:00</b></td><td>Out · 🎂 <b>cake collected by Mum</b> — straight into a fridge</td></tr>
+    <tr><td><b>12:30</b></td><td>Home</td></tr>
+    <tr><td><b>12:30</b></td><td>🔴 <b>THE ONLY GAP — and you need to eat in it</b></td></tr>
+    <tr><td><b>1:00</b></td><td><b>Lily naps 1–4</b> · cut fruit + veg, final packing</td></tr>
+    <tr><td><b>2:30</b></td><td>🚗 <b>Load up and go — setup starts</b></td></tr>
+    <tr><td><b>2:30–4:15</b></td><td>Set the room · foil balloons · puddles down · tables</td></tr>
+    <tr><td><b>4:15</b></td><td>Wake and dress Lily, crown on</td></tr>
+    <tr><td><b>4:30</b></td><td>🎉 <b>Doors open</b></td></tr>
+    <tr><td><b>4:45–5:45</b></td><td>🩱 <b>SWIM</b> — two named adults in the water</td></tr>
+    <tr><td><b>5:00–5:30</b></td><td>🔴 <b>BAKERY DELIVERS — mid-swim</b></td></tr>
+    <tr><td><b>5:45–6:15</b></td><td>Rinse and change · snack table opens</td></tr>
+    <tr><td><b>6:15–6:55</b></td><td>🍽 <b>Dinner</b></td></tr>
+    <tr><td><b>6:55–7:20</b></td><td>✂️ Masks + playdough</td></tr>
+    <tr><td><b>7:20–7:35</b></td><td>🪅 <b>Piñata</b> · pin the tail · puddle jump</td></tr>
+    <tr><td><b>7:35–7:50</b></td><td>🎂 <b>Cake</b></td></tr>
+    <tr><td><b>7:50–8:00</b></td><td>Goody bags, goodbyes</td></tr>
+    <tr><td><b>8:00–8:30</b></td><td>Pack down · photograph the room empty</td></tr>
+  </table>
+
+  <div class="note">🔴 <b>Pinch point one — the delivery lands mid-swim.</b> Forty items arrive between five and half past, while two adults are in the water and the rest are watching children swim. <b>Name one dry person now</b> and tell them the window. This is the thing most likely to go wrong.</div>
+
+  <div class="note">🔴 <b>Pinch point two — the cake is out of the shop at ten and cut at twenty-five to eight. Nine and a half hours.</b> Fresh cream, thirty degrees. <b>It cannot sit in a car boot or on a table.</b> Decide now: home fridge until you leave, then a cooler box with ice packs — and ask the clubhouse whether there's a fridge you can use on arrival.</div>
+
+  <div class="note">🍽 <b>And eat something at half twelve.</b> Netball, then out, then straight into prep — <b>you did exactly this last weekend and skipped lunch.</b> Eat while you're out, or leave a plate on the counter before you go.</div>
+
+  <div class="note">🪅 <b>One rule before the piñata comes out:</b> pull-string, or <b>adults swing only with a cleared circle.</b> A swinging stick among three-year-olds is the classic party A&amp;E story.</div>
+</section>
+
+<!-- ==================== FOOD ==================== -->
+<section id="t-food">
+  <h2 class="sec">Food</h2>
+  <p class="lede">Ordered · made · bought. Quantities are built around 20 servings.</p>
+
+  <div class="grp"><h3>✅ Ordered — nothing to do but receive it</h3>
+    <label class="item"><input type="checkbox"><span>🥪 <b>Sandwich box ×20 + croissants ×20</b> <em>bakery · <b>delivered to the clubhouse 5:00–5:30pm</b> — see the pinch point</em></span></label>
+    <label class="item"><input type="checkbox"><span>🎂 <b>Cake + decorations</b> <em><b>self pick-up 10am — Grandma</b></em></span></label>
+    <label class="item"><input type="checkbox"><span>🥤 <b>Drinks</b> <em>arriving today</em></span></label>
+    <label class="item"><input type="checkbox"><span>💧 <b>Water</b> <em>more than you think — they're swimming</em></span></label>
+  </div>
+
+  <div class="grp"><h3>🏠 Making at home</h3>
+    <label class="item"><input type="checkbox"><span>🥞 <b>Pancakes</b> <em>⚠️ <b>tonight, not Saturday morning</b></em></span></label>
+    <label class="item"><input type="checkbox"><span>🌭 <b>Sausages — boil</b> <em>⚠️ tonight · check the room for a microwave</em></span></label>
+    <label class="item"><input type="checkbox"><span>🍉 <b>Fruit — watermelon, apple, orange</b> <em>melon tonight · <b>apple and orange Saturday only</b>, they brown</em></span></label>
+    <label class="item"><input type="checkbox"><span>🥒 <b>Cucumber + carrot batons</b> <em>Saturday, in the nap window</em></span></label>
+  </div>
+
+  <div class="grp"><h3>🛒 Still to buy</h3>
+    <label class="item"><input type="checkbox"><span><b>Carrots</b></span></label>
+    <label class="item"><input type="checkbox"><span><b>Pita</b></span></label>
+    <label class="item"><input type="checkbox"><span><b>Chips</b></span></label>
+    <label class="item"><input type="checkbox"><span><b>Dips</b> <em>tzatziki · guacamole · beetroot</em></span></label>
+    <label class="item"><input type="checkbox"><span><b>Watermelon</b></span></label>
+  </div>
+
+  <div class="note">🚨 <b>Cut the grapes and any cherry tomato in half lengthwise</b> — if either ends up on the table. <b>Whole grapes are the number-one choking food for under-4s</b> and the room is full of three-year-olds. <b>No whole nuts anywhere.</b></div>
+  <div class="note">🧊 <b>Cut fruit needs a cooler, not a table.</b> Melon and citrus sitting out from half two until dinner is four hours in this heat — keep it boxed and cold until the snack table opens at quarter to six.</div>
+  <div class="note">🥄 <b>Dips want a spoon each, not shared crisps.</b> Thirty-odd people double-dipping one tub is the other thing that goes wrong. Decant into small bowls.</div>
+</section>
+
+<!-- ==================== PACK ==================== -->
+<section id="t-pack">
+  <h2 class="sec">Pack</h2>
+  <p class="lede">Your supplies list, plus what the last party needed that isn't on it yet.</p>
+
+  <div class="grp"><h3>Your list</h3>
+    <label class="item"><input type="checkbox"><span>🕯 <b>Candle</b> <em>the number 3</em></span></label>
+    <label class="item"><input type="checkbox"><span>🔥 <b>Lighter</b></span></label>
+    <label class="item"><input type="checkbox"><span>🔊 <b>Bluetooth speaker</b> <em>charged · songs downloaded</em></span></label>
+    <label class="item"><input type="checkbox"><span>🧻 <b>Wet wipes</b> · <b>tissues</b></span></label>
+    <label class="item"><input type="checkbox"><span>🍴 <b>Utensils</b> <em>spoons · forks · plates · cups · straws</em></span></label>
+    <label class="item"><input type="checkbox"><span>🗑 <b>Garbage bags</b> <em>take more than one — pack-down is thirty minutes</em></span></label>
+    <label class="item"><input type="checkbox"><span>🪅 <b>Piñata</b> <em>filled · plus the stick or the pull-strings</em></span></label>
+    <label class="item"><input type="checkbox"><span>🥤 <b>Drinks</b></span></label>
+    <label class="item"><input type="checkbox"><span>🔪 <b>Cake knife</b> <em>and something to serve onto</em></span></label>
+  </div>
+
+  <div class="grp"><h3>🆕 Not on your list yet — from the last party sheet</h3>
+    <label class="item"><input type="checkbox"><span><b>Tablecloths</b> <em>the one thing that makes photos look finished</em></span></label>
+    <label class="item"><input type="checkbox"><span><b>Blu Tack / low-tack tape</b> <em>most rooms won't allow anything else on the walls</em></span></label>
+    <label class="item"><input type="checkbox"><span><b>Scissors</b> · <b>kitchen paper</b> · <b>cling film or foil</b></span></label>
+    <label class="item"><input type="checkbox"><span>🧊 <b>Cooler box + ice packs</b> <em>the cake, the cut fruit and the sandwiches all want it</em></span></label>
+    <label class="item"><input type="checkbox"><span>🦟 <b>Mosquito patches</b> <em>poolside, dusk</em></span></label>
+    <label class="item"><input type="checkbox"><span>🩹 <b>Plasters</b> <em>wet floor, bare feet, thirty children</em></span></label>
+    <label class="item"><input type="checkbox"><span>🎀 <b>Hair ties</b> · 👑 <b>Lily's crown</b></span></label>
+    <label class="item"><input type="checkbox"><span>🖍 <b>Markers + baskets</b> · <b>paper</b> <em>the craft table</em></span></label>
+    <label class="item"><input type="checkbox"><span>🎁 <b>Goody bags</b> <em>✅ already packed — just don't leave them at home</em></span></label>
+    <label class="item"><input type="checkbox"><span>🟫 <b>Felt puddles</b> · 🥾 <b>wellies</b> <em>the photo prop by the door</em></span></label>
+    <label class="item"><input type="checkbox"><span>🎈 <b>Foil balloons + pump</b> <em>blown up in the room, not at home</em></span></label>
+    <label class="item"><input type="checkbox"><span>📱 <b>Phone charger / power bank</b> <em>you'll be photographing for four hours</em></span></label>
+    <label class="item"><input type="checkbox"><span>🛍 <b>Empty bags for wet swimsuits</b> <em>thirty children get changed at a quarter to six</em></span></label>
+  </div>
+
+  <div class="note">📦 <b>One crate per station — decor · craft · food · cake.</b> Loaded in the car tonight. Pack-down is thirty minutes and it goes much faster when everything has a box it came out of.</div>
+</section>
+
+<!-- ==================== POOL ==================== -->
+<section id="t-pool">
+  <h2 class="sec">Pool</h2>
+  <p class="lede">Swim is 4:45–5:45. Two named adults in the water.</p>
+
+  <div class="banner">🩱 <b>Guests were told: swimsuit, towel, full change of clothes.</b> Pack yours as if nobody read it — spares matter more than anything else on this page.</div>
+
+  <div class="grp"><h3>For Tyler, Lexi &amp; Lily</h3>
+    <label class="item"><input type="checkbox"><span><b>Swimsuits ×3</b> · rash guards</span></label>
+    <label class="item"><input type="checkbox"><span><b>Towels</b> <em>one each plus two spare</em></span></label>
+    <label class="item"><input type="checkbox"><span><b>Full change of clothes ×3</b> <em>including underwear — the one always forgotten</em></span></label>
+    <label class="item"><input type="checkbox"><span><b>Swim diapers</b> · <b>regular diapers</b></span></label>
+    <label class="item"><input type="checkbox"><span>👗 <b>Lily's party outfit + crown</b> <em>Lily changes at 4:15, before anyone arrives</em></span></label>
+    <label class="item"><input type="checkbox"><span>🧴 <b>Sunscreen</b> <em>on before you leave, not at the poolside</em></span></label>
+    <label class="item"><input type="checkbox"><span>🥽 Goggles</span></label>
+  </div>
+
+  <div class="grp"><h3>In the water</h3>
+    <label class="item"><input type="checkbox"><span>🛟 <b>Floats</b> · <b>beach ball</b> · <b>boards</b></span></label>
+    <label class="item"><input type="checkbox"><span>👥 <b>NAME THE TWO ADULTS IN THE WATER</b> <em>and tell them — "someone will be watching" is how this goes wrong</em></span></label>
+    <label class="item"><input type="checkbox"><span>🕐 <b>Tell people the swim ENDS at 5:45</b> <em>otherwise dinner slips and the whole run of show goes with it</em></span></label>
+  </div>
+
+  <div class="note">⚠️ <b>The swim and the delivery overlap.</b> Five to half five is exactly when the food arrives — so <b>the person receiving it cannot be one of the two in the water.</b> Three adults are committed in that half hour, not two.</div>
+</section>
+
 </main>
 
-<div class="footer-note">happy birthday, little one ✶</div>
+<footer>Happy birthday Lily 🐷</footer>
 
 <script>
-const STORE_KEY = 'smck-peppa-lily-v1';
-const PARTY = new Date('2026-09-19T16:30:00+08:00');
+const KEY = 'lily3-2026-v1';
 
-/* ---------- state ---------- */
-let S = { done: {}, kids: 12, adults: 14 };
-try { const raw = localStorage.getItem(STORE_KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch (e) {}
-function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) {} }
-
-/* ---------- helpers that scale with headcount ---------- */
-const K = () => S.kids, A = () => S.adults, TOT = () => S.kids + S.adults;
-const batches = () => Math.ceil((K() * 3 + A() * 3) / 12);   // ~12 pancakes per 250g batch, 3 each
-const upto = (n, step) => Math.ceil(n / step) * step;
-function cakeCall() {
-  const t = TOT();
-  if (t <= 14) return '8-inch';
-  if (t <= 22) return '8-inch + 6-inch';
-  return '2 × 8-inch';
-}
-
-/* ---------- TO-DO ---------- */
-const PHASES = [
-  { key: 'p0', label: 'Lock it in',    when: 'by Sun 30 Aug',        due: '2026-08-30' },
-  { key: 'p1', label: 'Two weeks out', when: 'by Sat 5 Sep',         due: '2026-09-05' },
-  { key: 'p2', label: 'One week out',  when: 'by Fri 11 Sep',        due: '2026-09-11' },
-  { key: 'p3', label: 'Party week',    when: 'Wed 16 – Fri 18 Sep',  due: '2026-09-18' },
-  { key: 'p4', label: 'Party day',     when: 'Sat 19 Sep',           due: '2026-09-19' },
-];
-
-const TODO = [
-  // ---- p0 : lock it in
-  {id:'t-book',   p:'p0', star:true, who:'Michelle', nm:'Book the function room + pool, 2:30–8:30pm',
-   note:'Book the whole block, not 4:30–8 — you need 2 hours to set up and 30 min to clear. Everything below assumes this is confirmed.'},
-  {id:'t-rules',  p:'p0', star:true, who:'Michelle', nm:'Check the house rules while booking',
-   note:'Five answers you need: max pax · pool guest limit · can you stick anything to walls/doors · is heating/cooking food allowed · music + end-time cut-off. Also the deposit amount.'},
-  {id:'t-guests', p:'p0', who:'Michelle', nm:'Finalise the guest list',
-   note:'Evie first — Lily asks for her by name. Count kids and adults separately, then set the numbers at the top of this page.'},
-  {id:'t-felt',   p:'p0', who:'Michelle', nm:"Dig out the felt puddles from Lexi's party and count them",
-   note:'Target is 8 puddles at mixed sizes. Whatever is short, the brown felt on the craft list covers.'},
-  {id:'t-tinsel', p:'p0', nm:'Find the tinsel fringe curtain + check the door width',
-   note:'Function room doors are usually wider than a bedroom door. If it falls short, one more panel is a cheap add to the Shopee order.'},
-  {id:'t-shopee', p:'p0', star:true, who:'Michelle', nm:'Place the Shopee / Lazada order',
-   note:'Longest lead time of anything on this list. Order it the same day you confirm the room — everything decorative hangs off this one basket.'},
-  {id:'t-outfit', p:'p0', nm:'Check Lily has a Peppa dress that still fits',
-   note:'If not, add it to the same Shopee order rather than a second one later.'},
-
-  // ---- p1 : two weeks out
-  {id:'t-invite', p:'p1', star:true, who:'Michelle', nm:'Send the invites (WhatsApp)',
-   note:'Must say: swimsuit + towel + a full change of clothes, and dinner is provided. RSVP by Fri 11 Sep — the cake and the goodie bags both key off that number.'},
-  {id:'t-pool',   p:'p1', star:true, nm:'Line up pool supervision — 2 adults in the water, named',
-   note:'A dozen small children and a pool is the one thing on this page that actually matters. Agree it now with two specific people, not "we’ll see on the day".'},
-  {id:'t-print',  p:'p1', nm:'Print the pin-the-tail poster (A1) + Peppa colouring sheets',
-   note:'Any print shop does A1 same-day. Colouring sheets — 20 copies on the home printer.'},
-  {id:'t-tables', p:'p1', nm:'Confirm what furniture the room already has',
-   note:'If it has no long tables you need two folding ones: pancake station + craft station must be separate.'},
-  {id:'t-playlist', p:'p1', nm:'Make the Peppa playlist + charge the speaker',
-   note:'~2 hours. Peppa songs at the start, ordinary kids’ music underneath dinner so the adults survive.'},
-
-  // ---- p2 : one week out
-  {id:'t-head',  p:'p2', star:true, who:'Michelle', nm:'Lock the headcount from RSVPs',
-   note:'Then set kids/adults at the top of this page — the shopping quantities and cake size all recompute from it.'},
-  {id:'t-cake',  p:'p2', star:true, who:'Michelle', nm:'Order the Awfully Chocolate cake for Fri 18 Sep delivery',
-   note:'Plain top, no writing — you are piping the grass yourself. Delivery window 2–6pm. Standard cakes need only a day, but order a week out so the slot is yours.'},
-  {id:'t-goodie', p:'p2', who:'Michelle', nm:'Assemble the goodie bags',
-   note:'Do it a week early. This is the job that always gets pushed to the night before and then done badly at 11pm.'},
-  {id:'t-piptest', p:'p2', nm:'Test the grass tip on a bit of buttercream',
-   note:'A #233 tip needs a stiffer buttercream than you think — if it slumps, more icing sugar. Five minutes now beats discovering it on the cake.'},
-  {id:'t-camera', p:'p2', nm:'Decide who is taking photos',
-   note:'One adult with the job, or there will be 200 photos of the cake and none of Lily.'},
-
-  // ---- p3 : party week
-  {id:'t-confirm', p:'p3', star:true, nm:'Wed 16 — reconfirm the room booking and the cake order',
-   note:'Both by message so you have it in writing.'},
-  {id:'t-shop1',  p:'p3', nm:'Thu 17 — supermarket run',
-   note:'Everything on the Supermarket tab. Buy the bananas green-ish; they ripen by Saturday.'},
-  {id:'t-shop2',  p:'p3', nm:'Thu 17 — Phoon Huat run',
-   note:'Grass tip, piping bags, icing sugar, gel colour, cake board.'},
-  {id:'t-cutfelt', p:'p3', nm:'Fri 18 — cut the brown felt into puddles',
-   note:'Irregular blobs, not circles. Mixed sizes, biggest about a metre across.'},
-  {id:'t-batter',  p:'p3', nm:'Fri 18 — make the pancake batter and rest it overnight',
-   note:'Resting overnight is genuinely better pancakes, and it takes 40 minutes off Saturday.'},
-  {id:'t-pipe',    p:'p3', star:true, who:'Michelle', nm:'Fri 18 — pipe the grass and set the figurines',
-   note:'Saturday morning is netball then Merbok — there is no window. Do the cake Friday night and put it straight back in the fridge.'},
-  {id:'t-latex',   p:'p3', nm:'Fri 18 — blow up the latex balloons',
-   note:'Latex only. Foil balloons on the day — they go slack overnight.'},
-  {id:'t-crates',  p:'p3', star:true, nm:'Fri 18 — pack the crates and load the car',
-   note:'One crate per station: decor · craft · pancake · cake. Saturday is a straight carry-down, no hunting.'},
-
-  // ---- p4 : party day
-  {id:'t-am',    p:'p4', nm:'8:00–12:30 — netball, then Merbok',
-   note:'Already on the calendar. Nothing party-shaped fits in here; do not try.'},
-  {id:'t-cook',  p:'p4', star:true, who:'Michelle', nm:'1:00–2:30 — cook the pancakes while Lily naps',
-   note:'Lily is down 1–4. Cook the full stack, layer with baking paper, into foil trays.'},
-  {id:'t-setup', p:'p4', star:true, who:'Shao', nm:'2:30–4:15 — set up the room (with Tyler and Lexi)',
-   note:'Puddles on the floor first, then tinsel on the door, then balloons, then the two stations. The big kids can do the puddles and the balloons on their own.'},
-  {id:'t-dress', p:'p4', nm:'4:15 — wake Lily, dress her, crown on',
-   note:'Fifteen minutes of quiet before the door opens. She will need it.'},
-  {id:'t-warm',  p:'p4', nm:'6:00 — warm the pancakes',
-   note:'120°C for 10 min if the room has an oven; otherwise foil trays in the cooler bags hold fine for 90 min.'},
-  {id:'t-down',  p:'p4', nm:'8:00–8:30 — pack down, bins out, deposit check',
-   note:'Photograph the room empty before you hand the key back.'},
-];
-
-/* ---------- SHOPPING ---------- */
-const STORES = [
-  { key: 's1', label: 'Shopee / Lazada',   when: 'order by Sun 30 Aug', due: '2026-08-30' },
-  { key: 's2', label: 'Craft — Spotlight / Art Friend', when: 'by Sat 5 Sep', due: '2026-09-05' },
-  { key: 's3', label: 'Phoon Huat',        when: 'Thu 17 Sep',          due: '2026-09-17' },
-  { key: 's4', label: 'Awfully Chocolate', when: 'order by Wed 16 Sep', due: '2026-09-16' },
-  { key: 's5', label: 'Supermarket',       when: 'Thu 17 Sep',          due: '2026-09-17' },
-  { key: 's6', label: 'Already at home — confirm', when: 'by Sun 30 Aug', due: '2026-08-30' },
-];
-
-const SHOP = [
-  // ---- s1 Shopee / Lazada
-  {id:'s-figs',   s:'s1', star:true, nm:'Peppa cake figurine set', q:'1 set', note:'Peppa, George, Mummy, Daddy. The centrepiece of the cake — order it first and check it arrives.'},
-  {id:'s-foil',   s:'s1', nm:'Peppa + George foil balloons', q:'1 set'},
-  {id:'s-num3',   s:'s1', star:true, nm:'Number "3" foil balloon, pink', q:'1', note:'This is the one in every photo.'},
-  {id:'s-latex',  s:'s1', nm:'Latex balloons — pink, red, white, pale blue', q:() => upto(TOT() * 3, 50) + ' pcs', note:'Peppa’s palette. Clusters, not an arch — most function rooms will not let you fix anything to the walls.'},
-  {id:'s-pump',   s:'s1', nm:'Balloon pump + curling ribbon + glue dots', q:'1 set'},
-  {id:'s-tail',   s:'s1', nm:'Pin the tail on Peppa — poster + tails', q:'1 set', note:'Or print your own A1. Yes, do this game — see the note on the Run of show tab about blindfolds.'},
-  {id:'s-tblware',s:'s1', nm:'Peppa paper plates, cups, napkins, tablecloths', q:() => TOT() + ' pax set', note:'Two tablecloths minimum — pancake station and craft station.'},
-  {id:'s-bags',   s:'s1', nm:'Peppa goodie bags', q:() => (K() + 2) + '', note:'Two spare, always.'},
-  {id:'s-crown',  s:'s1', star:true, nm:'Birthday crown or sash for Lily', q:'1'},
-  {id:'s-dress',  s:'s1', nm:'Peppa dress for Lily', q:'1', note:'Only if the one she has no longer fits.'},
-  {id:'s-bubbles',s:'s1', nm:'Mini bubble bottles', q:() => (K() + 2) + '', note:'Goodie bags, and spares for the pool.'},
-  {id:'s-stick',  s:'s1', nm:'Peppa sticker sheets', q:() => (K() + 2) + ''},
-  {id:'s-dough',  s:'s1', nm:'Mini playdough pots', q:() => (K() + 2) + ''},
-  {id:'s-float',  s:'s1', nm:'Peppa pool float / beach balls', q:'2'},
-
-  // ---- s2 Craft
-  {id:'c-felt',   s:'s2', star:true, nm:'Brown felt, 1m', q:'1 m', note:'Tops up the puddles you already have from Lexi’s party to 8. Buy the cheap acrylic felt, not wool.'},
-  {id:'c-plates', s:'s2', nm:'Pink paper plates (for the masks)', q:() => upto(K() * 2, 10) + '', note:'Two per child — one Peppa, one George.'},
-  {id:'c-card',   s:'s2', nm:'Card stock — pink + black, A4', q:'20 sheets', note:'Snouts, ears, eyes. Cut them out beforehand so the 3-year-olds are gluing, not cutting.'},
-  {id:'c-sticks', s:'s2', nm:'Lolly sticks', q:() => upto(K() * 2, 10) + ''},
-  {id:'c-eyes',   s:'s2', nm:'Googly eyes + foam sticker packs', q:'2 packs'},
-  {id:'c-glue',   s:'s2', nm:'Glue sticks', q:'6'},
-  {id:'c-scis',   s:'s2', nm:'Kid-safe scissors', q:'6', note:'For the older ones only.'},
-  {id:'c-tape',   s:'s2', star:true, nm:'Low-tack washi + double-sided tape', q:'2 rolls', note:'Residue on a function room wall is how you lose the deposit.'},
-  {id:'c-brown',  s:'s2', nm:'Brown playdough', q:'4 tubs', note:'The muddy-puddle tray — for the ones too small to sit through the mask craft.'},
-
-  // ---- s3 Phoon Huat
-  {id:'b-tip',    s:'s3', star:true, nm:'Wilton #233 grass piping tip', q:'1', note:'The multi-hole grass tip. Nothing else makes grass look like grass.'},
-  {id:'b-bags',   s:'s3', nm:'Disposable piping bags', q:'10'},
-  {id:'b-icing',  s:'s3', nm:'Icing sugar', q:'500 g'},
-  {id:'b-butter', s:'s3', nm:'Unsalted butter (for the buttercream)', q:'250 g'},
-  {id:'b-gel',    s:'s3', nm:'Gel colour — leaf green + moss green', q:'2', note:'Two greens piped together read as real grass. One flat green reads as a golf course.'},
-  {id:'b-board',  s:'s3', nm:'Cake board, 10-inch', q:'1'},
-  {id:'b-candle', s:'s3', star:true, nm:'Number "3" candle + long matches', q:'1'},
-
-  // ---- s4 Cake
-  {id:'k-cake',   s:'s4', star:true, nm:'Original All Chocolate — plain top, no writing', q:() => cakeCall(), note:'From $48. Deliver Fri 18 Sep, 2–6pm. Plain top is the whole point — you are piping grass over it so it reads as a muddy puddle.'},
-
-  // ---- s5 Supermarket
-  {id:'f-flour',  s:'s5', nm:'Plain flour', q:() => (batches() * 250 >= 1500 ? '2 kg' : '1 kg'), note:() => batches() + ' batches of pancake batter'},
-  {id:'f-bp',     s:'s5', nm:'Baking powder', q:'1'},
-  {id:'f-sugar',  s:'s5', nm:'Caster sugar', q:'500 g'},
-  {id:'f-eggs',   s:'s5', nm:'Eggs', q:() => (batches() + 8) + '', note:'Batter plus scrambled for the savoury station'},
-  {id:'f-milk',   s:'s5', nm:'Fresh milk', q:() => Math.ceil(batches() * 0.3 + 1) + ' L'},
-  {id:'f-butter', s:'s5', nm:'Butter', q:() => upto(batches() * 50 + 100, 250) + ' g'},
-  {id:'f-vanilla',s:'s5', nm:'Vanilla extract', q:'1'},
-  {id:'f-ham',    s:'s5', nm:'Ham + cheddar slices', q:'1 pack each', note:'Savoury station'},
-  {id:'f-saus',   s:'s5', nm:'Chicken cocktail sausages', q:() => Math.ceil(K() / 6) + ' packs'},
-  {id:'f-beans',  s:'s5', nm:'Baked beans', q:'2 tins'},
-  {id:'f-syrup',  s:'s5', star:true, nm:'Maple syrup', q:'1 large', note:'Peppa’s pancakes. Do not skimp here.'},
-  {id:'f-nut',    s:'s5', nm:'Nutella', q:'1 jar'},
-  {id:'f-cream',  s:'s5', nm:'Whipping cream', q:'2'},
-  {id:'f-banana', s:'s5', nm:'Bananas', q:() => Math.ceil(TOT() / 3) + '', note:'Buy them green-ish on Thursday'},
-  {id:'f-berry',  s:'s5', nm:'Strawberries + blueberries', q:'2 punnets each'},
-  {id:'f-sprink', s:'s5', nm:'Sprinkles + mini marshmallows', q:'1 each'},
-  {id:'f-pop',    s:'s5', nm:'Popcorn', q:() => Math.ceil(TOT() / 8) + ' packs', note:'The 5:45 holding snack while everyone changes'},
-  {id:'f-veg',    s:'s5', nm:'Cucumber, carrot sticks, cherry tomatoes, grapes', q:'1 platter worth'},
-  {id:'f-water',  s:'s5', star:true, nm:'Bottled water', q:() => upto(TOT() * 1.5, 12) + '', note:'Post-swim thirst is the single biggest under-buy at pool parties'},
-  {id:'f-juice',  s:'s5', nm:'Apple juice + Ribena', q:'2 + 1'},
-  {id:'f-ice',    s:'s5', nm:'Ice', q:'2 bags'},
-  {id:'f-coffee', s:'s5', nm:'Coffee sachets, tea bags, oat milk', q:'1 each', note:'The parents are staying 3.5 hours'},
-  {id:'f-trays',  s:'s5', nm:'Foil trays + baking paper + cling film', q:'4 trays'},
-  {id:'f-clean',  s:'s5', nm:'Paper towels, wet wipes, bin bags', q:'1 each', note:'Bin bags: pack twice what feels sensible'},
-  {id:'f-cutlery',s:'s5', nm:'Disposable cutlery + serving tongs', q:() => TOT() + ' sets, 4 tongs'},
-
-  // ---- s6 Already at home
-  {id:'h-tinsel', s:'s6', nm:'Tinsel fringe curtain', q:'✓', note:'Measure the function room door before you count on it'},
-  {id:'h-puddle', s:'s6', star:true, nm:"Felt puddles from Lexi's party", q:'count them', note:'Whatever is missing, the 1m of brown felt covers'},
-  {id:'h-boots',  s:'s6', nm:'Wellies — 2 pairs, as door props', q:'2', note:'Muddiest possible pair by the tinsel door. Photo op.'},
-  {id:'h-speaker',s:'s6', nm:'Bluetooth speaker', q:'1', note:'Charge it Friday'},
-  {id:'h-griddle',s:'s6', nm:'Large non-stick pan / electric griddle', q:'1–2', note:'For the Saturday afternoon cook'},
-  {id:'h-cooler', s:'s6', nm:'Cooler / insulated bags', q:'2', note:'Hold the pancakes hot from 2:30 to 6:15'},
-  {id:'h-noodle', s:'s6', nm:'Pool noodles + floats', q:'all of them'},
-  {id:'h-knife',  s:'s6', nm:'Cake knife + server + lighter', q:'1 set'},
-  {id:'h-towels', s:'s6', nm:'Spare towels', q:'4', note:'Someone always forgets'},
-];
-
-/* ---------- RUN OF SHOW ---------- */
-const RUN = [
-  {t:'1:00', t2:'– 2:30pm', cls:'prep', h:'Pancakes, while Lily naps', p:'Lily is down 1–4, so this is the only quiet stretch on Saturday. Cook the full stack, layer with baking paper, into foil trays, into the cooler bags.', tags:['Michelle','Kitchen']},
-  {t:'2:30', t2:'– 4:15pm', cls:'prep', h:'Set up the room', p:'Puddles on the floor first — they set the whole look. Then tinsel on the door, balloon clusters, then the two stations: pancake at one end, craft at the other.', tags:['Shao','Tyler','Lexi']},
-  {t:'4:15', t2:'pm', cls:'prep', h:'Wake and dress the birthday girl', p:'Crown on, quiet fifteen minutes, then downstairs.', tags:['Michelle']},
-  {t:'4:30', t2:'pm', cls:'key', h:'Doors open', p:'Guests arrive into the muddy puddles and the tinsel fringe. Bubbles going. Give the early ones a job — nothing settles a shy three-year-old faster.', tags:['Arrivals']},
-  {t:'4:45', t2:'– 5:45', cls:'key', h:'Swim', p:'One hour, and no longer — a three-year-old is done at sixty minutes. Two named adults in the water the whole time. Floats and beach balls in, no diving games.', tags:['Pool','2 adults in water']},
-  {t:'5:45', t2:'– 6:15', cls:'', h:'Rinse and change', p:'Popcorn, fruit and drinks on the table so the ones who change fast have somewhere to be. This half hour always runs long — let it.', tags:['Snack table open']},
-  {t:'6:15', t2:'– 6:55', cls:'key', h:'Pancake dinner', p:'Savoury end — ham, cheese, scrambled egg, sausages, beans. Sweet end — maple, Nutella, cream, banana, berries, sprinkles. Seat Evie next to Lily.', tags:['Two stations','Evie beside Lily']},
-  {t:'6:55', t2:'– 7:20', cls:'key', h:'Make something', p:'Paper-plate Peppa and George masks — snouts and ears pre-cut, so the little ones are gluing not cutting. Brown playdough tray alongside for anyone who will not sit still. Colouring sheets as the overflow.', tags:['Craft table','Take-home']},
-  {t:'7:20', t2:'– 7:35', cls:'key', h:'Pin the tail on Peppa', p:'Blindfold for Tyler, Lexi and the older ones. For the threes: no blindfold, just three spins and go — a blindfold on a three-year-old ends in tears, not laughter. Finish with a muddy puddle jump, everyone in at once.', tags:['Game','No blindfold for the 3s']},
-  {t:'7:35', t2:'– 7:50', cls:'key', h:'Cake', p:'Lights down, candle lit, Happy Birthday. Let Evie hold the number 3 balloon in the photo. Cut and hand round — small slices, it is nearly bedtime.', tags:['Photos','Chocolate + piped grass']},
-  {t:'7:50', t2:'– 8:00', cls:'', h:'Goodie bags and goodbyes', p:'Bags by the door so nobody leaves without one. Masks go home with their maker.', tags:['Farewell']},
-  {t:'8:00', t2:'– 8:30', cls:'prep', h:'Pack down', p:'Bins out, floor cleared, photograph the room empty before the key goes back.', tags:['Deposit']},
-];
-
-/* ---------- render ---------- */
-let view = 'todo', filter = 'all';
-
-function isDone(id) { return !!S.done[id]; }
-function toggle(id) { if (S.done[id]) delete S.done[id]; else S.done[id] = 1; save(); render(); }
-function bump(k, d) { S[k] = Math.max(0, S[k] + d); save(); render(); }
-function resetAll() { S.done = {}; save(); render(); }
-
-function val(v) { return typeof v === 'function' ? v() : v; }
-
-/* A group is late when its date has passed and something in it is still open.
-   Derived from today's date — nothing to keep up to date by hand. */
-function pastDue(due) { return due ? new Date(due + 'T23:59:59+08:00') < new Date() : false; }
-function groupFor(it) {
-  return (it.p ? PHASES : STORES).find(g => g.key === (it.p || it.s));
-}
-function isLate(it) {
-  const g = groupFor(it);
-  return !!g && pastDue(g.due) && !isDone(it.id);
-}
-function lateCount() { return TODO.concat(SHOP).filter(isLate).length; }
-
-function itemsFor(v) { return v === 'todo' ? TODO : SHOP; }
-
-function passesFilter(it) {
-  if (filter === 'all') return true;
-  if (filter === 'open') return !isDone(it.id);
-  if (filter === 'done') return isDone(it.id);
-  if (filter === 'star') return !!it.star;
-  if (filter === 'late') return isLate(it);
-  return it.p === filter || it.s === filter;
-}
-
-function liHTML(it) {
-  const cls = [isDone(it.id) ? 'done' : '', it.star ? 'star' : ''].filter(Boolean).join(' ');
-  const q = it.q ? '<span class="qty">' + val(it.q) + '</span>' : '';
-  const who = it.who ? '<span class="who">' + it.who + '</span>' : '';
-  const note = it.note ? '<span class="note">' + val(it.note) + '</span>' : '';
-  return '<li class="' + cls + '" data-id="' + it.id + '"><div class="box"></div>' +
-         '<div class="text"><span class="nm">' + it.nm + '</span>' + q + who + note + '</div></li>';
-}
-
-function renderList(target, groups, groupKey) {
-  const items = itemsFor(view).filter(passesFilter);
-  const lc = itemsFor(view).filter(isLate).length;
-  let html = lc ? '<div class="latebar"><b>' + lc + (lc === 1 ? ' item is' : ' items are') +
-    ' past their date.</b> Tap ⚠ Late to see just those.</div>' : '';
-  groups.forEach(g => {
-    const rows = items.filter(it => it[groupKey] === g.key);
-    if (!rows.length) return;
-    const openCt = rows.filter(it => !isDone(it.id)).length;
-    const late = pastDue(g.due) && openCt > 0;
-    html += '<div class="grp-head"><span>' + g.label + '</span>' +
-            '<span class="when' + (late ? ' late' : '') + '">' +
-            (late ? '⚠ overdue · was ' + g.when.replace(/^(by|order by) /, '') : g.when) + '</span>' +
-            '<span class="ct">' + (rows.length - openCt) + '/' + rows.length + '</span></div>' +
-            '<div class="card"><ul class="list">' + rows.map(liHTML).join('') + '</ul></div>';
+document.querySelectorAll('nav.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('main section').forEach(s => s.classList.toggle('active', s.id === btn.dataset.tab));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-  if (!html) html = '<div class="callout"><p>Nothing here with that filter on.</p></div>';
-  target.innerHTML = html;
-}
-
-function renderRun(target) {
-  let html = '<div class="callout mud"><h4>The shape of the afternoon</h4>' +
-    '<p>Swim first while everyone has energy, then feed them — post-swim hunger is real and it lands hard at 6pm. ' +
-    'Craft and games afterwards, when they are fed and calm enough to sit. Cake last, close to going-home time.</p></div>' +
-    '<div class="tl">';
-  RUN.forEach(s => {
-    html += '<div class="slot ' + s.cls + '">' +
-      '<div class="rail"><div class="t">' + s.t + '</div><div class="t2">' + s.t2 + '</div></div>' +
-      '<div class="spine"><div class="dot"></div></div>' +
-      '<div class="body"><h3>' + s.h + '</h3><p>' + s.p + '</p>' +
-      '<div class="tags">' + s.tags.map(t => '<span>' + t + '</span>').join('') + '</div></div></div>';
-  });
-  html += '</div>' +
-    '<div class="callout grass"><h4>The cake</h4><p>Awfully Chocolate, plain top, no writing. Green buttercream through a #233 grass tip, ' +
-    'two greens piped together so it does not read as a golf course. Figurines set in the grass, number 3 candle in the middle. ' +
-    'Pipe it <strong>Friday night</strong> — Saturday morning is netball and then Merbok, and there is no window.</p></div>' +
-    '<div class="callout"><h4>Evie</h4><p>Lily asks for her by name, so give her the small jobs: beside Lily at the pancake table, ' +
-    'her craft partner, and the one holding the number 3 balloon in the cake photo. At three years old that is the whole party.</p></div>';
-  target.innerHTML = html;
-}
-
-function renderFilters() {
-  const f = document.getElementById('filters');
-  let btns = [['all','All'],['open','To do'],['done','Done'],['star','⭐ Key']];
-  if (lateCount()) btns.splice(1, 0, ['late','⚠ Late']);
-  if (view === 'todo') PHASES.forEach(p => btns.push([p.key, p.label]));
-  if (view === 'shop') STORES.forEach(s => btns.push([s.key, s.label.split(' —')[0].split(' /')[0]]));
-  f.hidden = (view === 'run');
-  f.innerHTML = btns.map(b =>
-    '<button data-f="' + b[0] + '" class="' + (b[0] === 'star' || b[0] === 'late' ? 'star-f ' : '') + (filter === b[0] ? 'active' : '') + '">' + b[1] + '</button>'
-  ).join('');
-}
-
-function renderProgress() {
-  const all = TODO.concat(SHOP);
-  const done = all.filter(it => isDone(it.id)).length;
-  const pctv = all.length ? Math.round(done / all.length * 100) : 0;
-  document.getElementById('pct').textContent = pctv + '%';
-  document.getElementById('fill').style.width = pctv + '%';
-}
-
-function renderCountdown() {
-  const now = new Date();
-  const days = Math.ceil((PARTY - now) / 86400000);
-  const el = document.getElementById('countdown');
-  if (days > 1) el.textContent = days + ' days to go';
-  else if (days === 1) el.textContent = 'Tomorrow';
-  else if (days === 0) el.textContent = 'Today ✶';
-  else el.textContent = 'Happy birthday, Lily ✶';
-}
-
-function render() {
-  document.getElementById('v-kids').textContent = S.kids;
-  document.getElementById('v-adults').textContent = S.adults;
-  document.getElementById('paxbar').hidden = (view === 'run');
-  document.getElementById('todo-view').hidden = view !== 'todo';
-  document.getElementById('shop-view').hidden = view !== 'shop';
-  document.getElementById('run-view').hidden  = view !== 'run';
-  renderFilters();
-  if (view === 'todo') renderList(document.getElementById('todo-view'), PHASES, 'p');
-  if (view === 'shop') renderList(document.getElementById('shop-view'), STORES, 's');
-  if (view === 'run')  renderRun(document.getElementById('run-view'));
-  renderProgress();
-  renderCountdown();
-}
-
-document.addEventListener('click', e => {
-  const li = e.target.closest('li[data-id]');
-  if (li) { toggle(li.dataset.id); return; }
-  const tab = e.target.closest('button.tab');
-  if (tab) { view = tab.dataset.view; filter = 'all';
-    document.querySelectorAll('button.tab').forEach(b => b.classList.toggle('active', b === tab));
-    render(); return; }
-  const fb = e.target.closest('#filters button');
-  if (fb) { filter = fb.dataset.f; render(); return; }
 });
 
-render();
+const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+const save = () => localStorage.setItem(KEY, JSON.stringify(boxes.map(b => b.checked)));
+try { (JSON.parse(localStorage.getItem(KEY) || '[]')).forEach((v, i) => { if (boxes[i]) boxes[i].checked = v; }); }
+catch (e) { /* first run */ }
+boxes.forEach(b => b.addEventListener('change', save));
 </script>
 </body>
 </html>
